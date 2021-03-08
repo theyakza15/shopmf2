@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Mitr&display=swap');
+* {
+    font-family: 'Mitr', sans-serif;
+    font-size: 20px !important;
+    color:DarkSlateGray;
+}
+
+table{
+    
+}
+.mt--7, .my--7{
+    margin-top: -10rem !important;
+}
+.namecolor{
+    color: white !important;
+}
+.fontmenu{
+    font-size: 20px !important;
+}
