@@ -57,7 +57,7 @@ function DateThai($strDate)
                                     <?php
                                    $sql_pay = "SELECT pay_id,dis_id,discount,total,pay_date,status_pay,type_pay
                                    FROM paymant
-                                   
+                                   WHERE status_pay=1   
                                    ORDER BY pay_id ASC";
                                     $result = mysqli_query($conn, $sql_pay);
                                     if ($result->num_rows > 0) {
@@ -107,7 +107,9 @@ function DateThai($strDate)
                                                 </td>
                                                 </td>
                                                 <td class="sta">
+                                                <button type='button' id="btn_print" class='<?= $color ?>' data-toggle="tooltip" data=" " data-id="<?=$payid?>" >พิมพ์</button>
                                                 <button type='button' id="cancel_sale" class='<?= $color ?>' data-toggle="tooltip" data=" " ><i class="<?= $image ?>" style="color:white"></i></span></button>
+                                                <button type='button' id="remove" data-id="<?=$payid?>" class='<?= $color ?>' data-toggle="tooltip" data=" " ><i class="<?= $image ?>" style="color:white"></i></span></button>
                                                 </td>
 
                             </div>
@@ -144,7 +146,7 @@ function DateThai($strDate)
 <!--   Core JS Files   -->
 
 </body>
-<script src="dist/js/apps/product.js"></script>
+<script src="dist/js/apps/sale_re.js"></script>
 
 
 

@@ -44,77 +44,35 @@ include("sidebar.php");
 
                             </div>
                             <div class="card-body">
-    <table class="table" border="0" width="50%">
-    <thead>
-        <tr>
-          <th width="5%">
-            <center>ชื่อสินค้า</center>
-          </th>
-          <th width="5%">
-            <center>ไซส์</center>
-          </th>
-          <th width="5%">
-            <center>จำนวนที่ขายได้</center>
-          </th>
-         
-
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-        $sql_pay = "SELECT  pay_pd_id,SUM(pay_total) AS pay_total,SUM(amount_pay)AS amount_pay,status_pay_det
-        ,tb_size.si_name AS si_name
-        ,tb_product.pd_name AS pd_name
-        ,tb_color.co_name AS co_name
-        FROM paymant_detail
-        INNER JOIN tb_color_detail ON tb_color_detail.id_color_det =paymant_detail.pay_pd_id
-        INNER JOIN tb_color ON tb_color.co_id = tb_color_detail.id_color
-        INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
-        INNER JOIN tb_size ON tb_size.si_id =tb_produnt_detail.det_size
-        INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
-        
-        GROUP BY det_size
-        ORDER BY SUM(amount_pay) DESC
-        LIMIT 5";
-
-        $result = mysqli_query($conn, $sql_pay);
-        if ($result->num_rows > 0) {
-          $i = 0;
-          while ($row = $result->fetch_assoc()) {
-            $top_name = $row['pd_name'];
-            $top_si = $row['si_name'];
-            $top_to = $row['pay_total'];
-            $top_am = $row['amount_pay'];
-
-            $i++;
-
-
-
-        ?>
-            <tr>
-
-              
-              <td class="text-center border-bottom">
-                <?php echo $top_name; ?>
-              </td>
-              <td class="text-center border-bottom">
-                <?php echo $top_si; ?>
-              </td>
-              <td class="text-center border-bottom">
-                <?php echo $top_am; ?>
-              </td>
-              
-
-            </tr>
-
-      </tbody>
-  <?php
-          }
-        }
-
-  ?>
-
-    </table>
+                            <select id="month">
+                            <option selected value="">----โปรดเลือก----</option>
+                                        <option value="1">มกราคม</option>
+                                        <option value="2">กุมภาพันธ์</option>
+                                        <option value="3">มีนาคม</option>
+                                        <option value="4">เมษายน</option>
+                                        <option value="5">พฤษภาคม</option>
+                                        <option value="6">มิถุนายน</option>
+                                        <option value="7">กรกฎาคม</option>
+                                        <option value="8">สิงหาคม</option>
+                                        <option value="9">กันยายน</option>
+                                        <option value="10">ตุลาคม</option>
+                                        <option value="11">พฤษจิกายน</option>
+                                        <option value="12">ธันวาคม</option>
+                            </select>
+                            <select id="year"  name="year">
+                                        <option selected value="">----โปรดเลือก----</option>
+                                        <?php
+$count = 2600;
+for ($i = 2560; $i < $count; $i++) {
+    $a = $i - 543;
+    ?>
+                                        <option value="<?=$a?>"><?php echo $i; ?></option>
+                                        <?php
+}
+?>
+                                    </select>
+                                    <button id="btn_search" onclick="loaddata()">  ค้นหา</button>
+  <div id = "show_top"></div>
                             </div>
                         </div>
                     </div>
@@ -229,6 +187,22 @@ include("sidebar.php");
 </div>
 
 <script>
+function loaddata(){
+  var month = $("#month").val()
+  var year = $('#year').val()
+  $.ajax({
+            url: "ajax/index/get_top.php",
+            method: "POST",
+            data: {
+              month: month,
+              year :year
+            },
+            success: function (data) {
+               $('#show_top').html(data)  
+            }
+        });
+}
+loaddata()
   var ctx = document.getElementById('myChart').getContext('2d');
   var obj = []
   $.ajax({
