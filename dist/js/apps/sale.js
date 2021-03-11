@@ -260,6 +260,10 @@ $(document).ready(function() {
                             }else{
                                var to_dis = total
                             } 
+                            data = parseInt(data)
+                            to_dis= parseInt(to_dis)
+                          data =  numberWithCommas(data.toFixed(2))
+                          to_dis =  numberWithCommas(to_dis.toFixed(2))
                             table2.row.add([
                                 number,
                                 md_id,
@@ -273,8 +277,7 @@ $(document).ready(function() {
                             ]).draw(false);
             
                         }
-                            
-            
+                        
                     });
                     
                 }
@@ -289,6 +292,11 @@ $(document).ready(function() {
         
         
     })
+    function numberWithCommas(x) {
+        var parts = x.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join(".");
+    }
       function sum_table() {
         var table = document.getElementById("tb_product_list")
 
@@ -296,12 +304,15 @@ $(document).ready(function() {
         sumdis = 0;
       
             for (var i = 1; i < table.rows.length; i++) {
-                sumVal = sumVal + parseFloat(table.rows[i].cells[6].innerHTML);
+                sumVal = sumVal + parseFloat(table.rows[i].cells[6].innerHTML.replace(/,/g, ''));
             }
             for (var i = 1; i < table.rows.length; i++) {
-                sumdis = sumdis + parseFloat(table.rows[i].cells[5].innerHTML);
+                sumdis = sumdis + parseFloat(table.rows[i].cells[5].innerHTML.replace(/,/g, ''));
             }
-            
+            sumVal = parseInt(sumVal)
+            sumdis= parseInt(sumdis)
+            sumVal =  numberWithCommas(sumVal.toFixed(2))
+            sumdis =  numberWithCommas(sumdis.toFixed(2))
             $('#discount').val(sumdis)
             var dis = $('#discount').val()
             dis = parseInt(dis)
@@ -381,8 +392,16 @@ $(document).ready(function() {
             return $(this).text();
         }).get();
         var check
-
-        var total_price =$('#total_price').val()
+        var pay_total1 = [],arr_discount=[]
+        for (const index of pay_total) {
+            var pay_total = parseFloat(index.replace(/,/g, ''));
+            pay_total1.push(pay_total)
+        }
+        for (const index of dis2) {
+            var pay_total = parseFloat(index.replace(/,/g, ''));
+            arr_discount.push(pay_total)
+        }
+         var total_price =$('#total_price').val()
         var discount = $('#discount').val()
         if ($('#p').is(':checked')) {
             check = 1;
@@ -399,6 +418,7 @@ console.log(l1)
                 button: false,
             });
         } else {
+            
             $.ajax({
                 url: "ajax/sale/insert_sale.php",
                 method: "POST",
@@ -406,8 +426,8 @@ console.log(l1)
                     pro_id: l1,
                     amonut: amonut,
                     check:check,
-                    pay_total:pay_total,
-                    total_price:total_price,
+                    pay_total:pay_total1,
+                    total_price:arr_discount,
                     discount:discount,
                     dis2:dis2
 
@@ -425,18 +445,16 @@ console.log(l1)
                         location.reload();
                     }, 2000);  
                 }
-
-
             });
-        }
+        } 
     })
     $("#money").change(function() {
         var money = $(this).val()
         var elem = $(this).val();
         var total = $('#price_total').val()
         var change =0
-        money = parseInt(money)
-        total = parseInt(total)
+        money = parseFloat(money.replace(/,/g, ''));
+        total = parseFloat(total.replace(/,/g, ''));
         if (!elem.match(/^([0-9 .])+$/i)) {
             swal({
                 text: "กรุณากรอกจำนวนเงิน",
@@ -451,8 +469,12 @@ console.log(l1)
                     button: false,
                 });
             }else{
-                change=money-total
-                $('#price_re').val(change)
+                var ptotal_pay = total;
+                var pmoney = parseFloat(money);
+                var pchange = parseFloat(change);
+                pchange=pmoney-ptotal_pay
+                $('#price_re').val(numberWithCommas(pchange.toFixed(2)))
+                $('#money').val(numberWithCommas(pmoney.toFixed(2)))
             }
         }
         

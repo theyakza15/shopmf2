@@ -69,13 +69,16 @@ include("sidebar.php");
                     <select class="form-control sel_type" id="year" name="year">
                       <option selected value="">----โปรดเลือก----</option>
                       <?php
-                      $count = 2600;
-                      for ($i = 2560; $i < $count; $i++) {
-                        $a = $i - 543;
+                      $datenow = strtotime(date("Y-m-d"));
+                      $year = date('Y', $datenow)+543 ;
+                      $year = intval($year);
+                      $endyear = $year-10;
+                      for ($i = $year; $i >= $endyear; $i--) {
+                        $a = $i - 543
                       ?>
                         <option value="<?= $a ?>"><?php echo $i; ?></option>
                       <?php
-                      }
+                     }
                       ?>
                     </select>
                   </div>
