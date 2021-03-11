@@ -98,7 +98,7 @@ $emp_i = $tmp1 . $sub_date . $a;
 
                                     $sql_emp = "SELECT emp_id ,emp_name ,emp_surname,emp_number,emp_czid,emp_bd
                             ,emp_email,emp_sex,emp_numhome,emp_muu,emp_alley,emp_road,emp_county,emp_district
-                            ,emp_province,emp_posnum,emp_pic,status
+                            ,emp_province,emp_posnum,emp_pic,status_emp
 FROM tb_employees
 /* LEFT JOIN tb_type ON tb_type.ty_name=tb_group.ty_id  */
 ORDER BY emp_id ASC";
@@ -126,7 +126,7 @@ ORDER BY emp_id ASC";
                                             $emp_posnum = $row['emp_posnum'];
                                             $emp_pic = $row['emp_pic'];
 
-                                            $status = $row['status'];
+                                            $status = $row['status_emp'];
                                             if ($status == '1') {
                                                 $image = 'fas fa-times';
                                                 $color = "btn btn-danger btn-sm";

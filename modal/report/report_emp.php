@@ -112,12 +112,15 @@
                         <div class="col-7">
                             <div class="dropdown">
                                 <div class="form-group">
-                                    <select id="month_year_emp_pro" class="form-control" name="month_year_emp_pro" readonly>
+                                    <select class="form-control sel_type" id="month_year_emp_pro" name="month_year_emp_pro" readonly>
                                         <option selected value="0">----โปรดเลือก----</option>
                                         <?php
-                                        $count = 2600;
-                                        for ($i = 2560; $i < $count; $i++) {
-                                            $a = $i - 543;
+                                        $datenow = strtotime(date("Y-m-d"));
+                                        $year = date('Y', $datenow) + 543;
+                                        $year = intval($year);
+                                        $endyear = $year - 10;
+                                        for ($i = $year; $i >= $endyear; $i--) {
+                                            $a = $i - 543
                                         ?>
                                             <option value="<?= $a ?>"><?php echo $i; ?></option>
                                         <?php
@@ -162,7 +165,7 @@
                         </div>
                         <div class="col-6" align="left">
                             <div class="form-group">
-                                <button type="button" data-dismiss="modal" id ="cn_emp" class="btn btn-outline-danger">ยกเลิก</button>
+                                <button type="button" data-dismiss="modal" id="cn_emp" class="btn btn-outline-danger">ยกเลิก</button>
                             </div>
                         </div>
                     </div>

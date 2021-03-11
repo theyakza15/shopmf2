@@ -192,7 +192,7 @@ $(document).ready(function () {
             $("#date_emp_pro1").attr("readonly", true);
             $("#date_emp_pro2").attr("readonly", true);
             $("#month_emp_pro").attr("readonly", false);
-            $("#month_year_emp_pro").attr("readonly", true);
+            $("#month_year_emp_pro").attr("readonly", false);
             $('#status_emp').val(2)
             $('#date_emp_pro1').val(0)
             $('#date_emp_pro2').val(0)
@@ -369,7 +369,7 @@ $("#in_pro").on("change", function () {
         $("#date_in_pro1").attr("readonly", true);
         $("#date_in_pro2").attr("readonly", true);
         $("#month_in_pro").attr("readonly", false);
-        $("#month_year_in_pro").attr("readonly", true);
+        $("#month_year_in_pro").attr("readonly", false);
         $("#status_sto").attr("readonly", false);
         $('#si_sto').val(0)
         $('#co_sto').val(0)

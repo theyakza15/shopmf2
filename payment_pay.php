@@ -10,8 +10,24 @@ $sql_idpay="SELECT MAX(pay_id) as Maxid ,pay_date FROM `paymant`
 WHERE pay_id = (SELECT MAX(pay_id) FROM paymant)";
 $result = mysqli_query($conn, $sql_idpay);
 $row = mysqli_fetch_assoc($result);
+
 $total_price_sum=0;
-/* $sum=0; */
+function DateThai($strDate)
+{
+    $strYear = date("Y", strtotime($strDate)) + 543;
+    $strMonth = date("n", strtotime($strDate));
+    $strDay = date("j", strtotime($strDate));
+    $strHour = date("H", strtotime($strDate));
+    $strMinute = date("i", strtotime($strDate));
+    if ($strDay < 10) {
+        $strDay = "0" . $strDay;
+      
+    }
+    if ($strMonth < 10) {
+        $strMonth ="0".$strMonth;
+    }
+    return "$strDay/$strMonth/$strYear $strHour:$strMinute";
+}
 
 ?>
 <head>
@@ -39,7 +55,7 @@ $total_price_sum=0;
         </tr> 
         <tr>
             <td>อ.เมือง จ.พิจิตร 66000</td>
-            <td width="150px" class="text-right">วันออก :<?php echo $row['pay_date']; ?> </td>
+            <td width="150px" class="text-right">วันออก :<?php echo DateThai ($row['pay_date']); ?> </td>
         </tr>
         <tr>
             <td>เบอร์โทรศัพท์. 094-763-0932</td>

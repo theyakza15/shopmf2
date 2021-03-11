@@ -97,7 +97,7 @@ require("sidebar.php");
                                             $i++;
                                             $sql_dis = "SELECT * FROM tb_permissions
                                             INNER JOIN tb_employees ON tb_employees.emp_id=tb_permissions.emp_id
-                                            WHERE tb_employees.emp_id='$emp_id' AND tb_employees.status='0'";
+                                            WHERE tb_employees.emp_id='$emp_id' AND tb_employees.status_emp='0'";
                                             $res = mysqli_query($conn, $sql_dis);
                                             if ($rows = $res->num_rows > 0) {
                                                 $dis = "disabled";
@@ -233,7 +233,7 @@ require("sidebar.php");
                             <select class="form-control" id="pername">
                                 <option value="0">กรุณาเลือกชื่อ</option>
                                 <?php
-                                $sql_edit_pro = "SELECT * FROM tb_employees WHERE status ='1' and status_per ='0'";
+                                $sql_edit_pro = "SELECT * FROM tb_employees WHERE status_emp ='1' and status_per ='0'";
                                 $result2 = mysqli_query($conn, $sql_edit_pro);
                                 while ($row2 = $result2->fetch_assoc()) {
                                     $emp_id = $row2['emp_id'];

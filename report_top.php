@@ -8,9 +8,7 @@ $name = $_SESSION['emp_name'];
 $surname = $_SESSION['emp_surname'];
 date_default_timezone_set("Asia/Bangkok");
 $d = date("Y-m-d H:i");
-/* $top_product=$_POST['top_product']; */
-/* $top_si=$_POST['top_si'];
-$top_co=$_POST['top_co']; */
+
 $date_top_pro1=$_POST['date_top_pro1'];
 $date_top_pro2=$_POST['date_top_pro2'];
 $month_top_pro=$_POST['month_top_pro'];
@@ -33,73 +31,26 @@ function DateThai1($start)
     return $show;
 }
 DateThai1($date_top_pro1 && $date_top_pro2);
-/* if($top_product!='0'){
-  $sql_pay = "SELECT  pay_pd_id,SUM(pay_total) AS pay_total,SUM(amount_pay)AS amount_pay,status_pay_det
-        ,tb_size.si_name AS si_name
-        ,tb_product.pd_name AS pd_name
-        FROM paymant_detail
-        INNER JOIN tb_color_detail ON tb_color_detail.id_color_det =paymant_detail.pay_pd_id
-        INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
-        INNER JOIN tb_size ON tb_size.si_id =tb_produnt_detail.det_size
-        INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
-        WHERE tb_product.pd_id ='$top_product'
-        GROUP BY det_size
-        ORDER BY SUM(amount_pay) DESC
-        LIMIT 5";
 
-$namepd = "SELECT pd_name 
-FROM tb_product
-WHERE pd_id = '$top_product'";
-$result3= mysqli_query($conn,$namepd);
-$row = mysqli_fetch_assoc($result3);
-$name_pd = $row['pd_name'];
-$title = "รายงานยอดขายสูงสุดสินค้า ".$name_pd ;  */
+function DateThai($strDate)
+{
+    $strYear = date("Y", strtotime($strDate)) + 543;
+    $strMonth = date("n", strtotime($strDate));
+    $strDay = date("j", strtotime($strDate));
+    $strHour = date("H", strtotime($strDate));
+    $strMinute = date("i", strtotime($strDate));
+    if ($strDay < 10) {
+        $strDay = "0" . $strDay;
+      
+    }
+    if ($strMonth < 10) {
+        $strMonth ="0".$strMonth;
+    }
+    return "$strDay/$strMonth/$strYear $strHour:$strMinute";
+}
 
 
-/* }else if ($top_si!='0'){
-  $sql_pay = "SELECT  pay_pd_id,SUM(pay_total) AS pay_total,SUM(amount_pay)AS amount_pay,status_pay_det
-  ,tb_size.si_name AS si_name
-  ,tb_product.pd_name AS pd_name
-  FROM paymant_detail
-  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det =paymant_detail.pay_pd_id
-  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
-  INNER JOIN tb_size ON tb_size.si_id =tb_produnt_detail.det_size
-  INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
-  WHERE tb_size.si_id ='$top_si'
-  GROUP BY det_size
-  ORDER BY SUM(amount_pay) DESC
-  LIMIT 5";
 
-$namesi = "SELECT si_name 
-FROM tb_size
-WHERE si_id = '$top_si'";
-$result10= mysqli_query($conn,$namesi);
-$row = mysqli_fetch_assoc($result10);
-$name_si = $row['si_name'];
-$title = "รายงานยอดขายสูงสุดไซส์ ".$name_si ; 
-}else if ($top_co!='0'){
-  $sql_pay = "SELECT  pay_pd_id,SUM(pay_total) AS pay_total,SUM(amount_pay)AS amount_pay,status_pay_det
-  ,tb_size.si_name AS si_name
-  ,tb_product.pd_name AS pd_name
-  ,tb_color.co_name AS co_name
-  FROM paymant_detail
-  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det =paymant_detail.pay_pd_id
-  INNER JOIN tb_color ON tb_color.co_id = tb_color_detail.id_color
-  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
-  INNER JOIN tb_size ON tb_size.si_id =tb_produnt_detail.det_size
-  INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
-  WHERE tb_color.co_id ='$top_co'
-  GROUP BY det_size
-  ORDER BY SUM(amount_pay) DESC
-  LIMIT 5";
-
-$nameco = "SELECT co_name 
-FROM tb_color
-WHERE co_id = '$top_co'";
-$result11= mysqli_query($conn,$nameco);
-$row = mysqli_fetch_assoc($result11);
-$name_co = $row['co_name'];
-$title = "รายงานยอดขายสูงสุดสี ".$name_co ;  */
 
  if ($date_top_pro1!=''&&$date_top_pro2!=''){
   $sql_pay = "SELECT  pay_pd_id,SUM(pay_total) AS pay_total,SUM(amount_pay)AS amount_pay,status_pay_det
@@ -208,7 +159,7 @@ else{
       </tr>
       <tr>
         <td>อ.เมือง จ.พิจิตร 66000</td>
-        <td width="250px" class="text-right">วันออก : </td>
+        <td width="250px" class="text-right">วันออก :<?= DateThai ($d)?> </td>
       </tr>
       <tr>
         <td>เบอร์โทรศัพท์. 094-763-0932</td>

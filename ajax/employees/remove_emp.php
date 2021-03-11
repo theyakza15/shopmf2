@@ -8,13 +8,13 @@ $status = $_POST['status'];
 $empid = $_SESSION['emp_id'];
 
 if($status==1){
-$sql_type = "UPDATE tb_employees set  status ='0' where emp_id ='$emp_id'";
+$sql_type = "UPDATE tb_employees set  status_emp ='0' where emp_id ='$emp_id'";
 $sql_permiss = "UPDATE tb_permissions set status = '0' where emp_id ='$emp_id'";
 $sql_log ="INSERT INTO log_mafear(emp_id,m_ss,date_log)
 VALUES('$empid','ได้ทำการยกเลิกพนักงาน','$dd')";
 
 }else{
-$sql_type = "UPDATE tb_employees set status='1' where emp_id ='$emp_id'";
+$sql_type = "UPDATE tb_employees set status_emp='1' where emp_id ='$emp_id'";
 $sql_permiss = "UPDATE tb_permissions set status = '1' where emp_id ='$emp_id'";
 
 $sql_log ="INSERT INTO log_mafear(emp_id,m_ss,date_log)

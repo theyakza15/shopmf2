@@ -8,9 +8,6 @@ $name = $_SESSION['emp_name'];
 $surname = $_SESSION['emp_surname'];
 date_default_timezone_set("Asia/Bangkok");
 $d = date("d-m-Y H:i");
-/* $sale_sto = $_POST['sale_sto']; */
-/* $si_pay = $_POST['si_pay'];
-$co_pay = $_POST['co_pay']; */
 $date_pay_pro1 = $_POST['date_pay_pro1'];
 $date_pay_pro2 = $_POST['date_pay_pro2'];
 $month_pay_pro = $_POST['month_pay_pro'];
@@ -34,61 +31,23 @@ function DateThai1($start)
     return $show;
 }
 DateThai1($date_pay_pro1 && $date_pay_pro2);
-/* $status_pay = $_POST['status_pay']; */
-/* if ($sale_sto!='0'){
-  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay
-  ,paymant.pay_date AS pay_date
-  ,tb_product.pd_name AS pd_name
-  ,paymant.type_pay AS type_pay
-  ,tb_color.co_name AS co_name
-  ,tb_size.si_name AS si_name
-  FROM paymant_detail
-  INNER JOIN paymant ON paymant.pay_id = paymant_detail.pay_id
-  INNER JOIN tb_color_detail  ON tb_color_detail.id_color_det = paymant_detail.pay_pd_id
-  INNER JOIN tb_color ON tb_color.co_id = tb_color_detail.id_color
-  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det = tb_color_detail.pd_id
-  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
-  INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
-  WHERE paymant.type_pay='$sale_sto'  
-  ORDER BY pay_id ASC";
-  $title = "รายงานยอดขาย (ประเภทการขาย)"; */
-  
-/* }else if ($si_pay!='0') {
-  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay
-  ,paymant.pay_date AS pay_date
-  ,tb_product.pd_name AS pd_name
-  ,paymant.type_pay AS type_pay
-  ,tb_color.co_name AS co_name
-  ,tb_size.si_name AS si_name
-  FROM paymant_detail
-  INNER JOIN paymant ON paymant.pay_id = paymant_detail.pay_id
-  INNER JOIN tb_color_detail  ON tb_color_detail.id_color_det = paymant_detail.pay_pd_id
-  INNER JOIN tb_color ON tb_color.co_id = tb_color_detail.id_color
-  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det = tb_color_detail.pd_id
-  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
-  INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
-  WHERE tb_size.si_id='$si_pay'  
-  ORDER BY pay_id ASC";
-  $title = "รายงานยอดขาย (ไซส์)";
- 
-}else if ($co_pay!='0') {
-  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay
-  ,paymant.pay_date AS pay_date
-  ,tb_product.pd_name AS pd_name
-  ,paymant.type_pay AS type_pay
-  ,tb_color.co_name AS co_name
-  ,tb_size.si_name AS si_name
-  FROM paymant_detail
-  INNER JOIN paymant ON paymant.pay_id = paymant_detail.pay_id
-  INNER JOIN tb_color_detail  ON tb_color_detail.id_color_det = paymant_detail.pay_pd_id
-  INNER JOIN tb_color ON tb_color.co_id = tb_color_detail.id_color
-  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det = tb_color_detail.pd_id
-  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
-  INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
-  WHERE tb_color.co_id='$co_pay'  
-  ORDER BY pay_id ASC";
-  $title = "รายงานยอดขาย (สี)"; */
-  
+function DateThai($strDate)
+{
+    $strYear = date("Y", strtotime($strDate)) + 543;
+    $strMonth = date("n", strtotime($strDate));
+    $strDay = date("j", strtotime($strDate));
+    $strHour = date("H", strtotime($strDate));
+    $strMinute = date("i", strtotime($strDate));
+    if ($strDay < 10) {
+        $strDay = "0" . $strDay;
+      
+    }
+    if ($strMonth < 10) {
+        $strMonth ="0".$strMonth;
+    }
+    return "$strDay/$strMonth/$strYear $strHour:$strMinute";
+}
+
  if ($date_pay_pro1!=''&&$date_pay_pro2!=''&&$status_pay!='2') {
   $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
@@ -160,7 +119,7 @@ DateThai1($date_pay_pro1 && $date_pay_pro2);
   WHERE  status_pay_det ='$status_pay'
   ORDER BY pay_id ASC";
   $title = 'รายงานสถานะยอดขาย ';
-  echo 1 ;
+  
 }
 else{
   $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
@@ -207,7 +166,7 @@ else{
       </tr>
       <tr>
         <td>อ.เมือง จ.พิจิตร 66000</td>
-        <td width="250px" class="text-right">วันออก :<?=$d?> </td>
+        <td width="250px" class="text-right">วันออก :<?= DateThai ($d)?> </td>
       </tr>
       <tr>
         <td>เบอร์โทรศัพท์. 094-763-0932</td>
@@ -241,17 +200,18 @@ else{
           <th width="5%">
             <center>จำนวนที่ขาย</center>
           </th>
+          
+
           <th width="10%">
             <center>ส่วนลด</center>
           </th>
+  
           <th width="10%">
             <center>ราคาสุทธิ</center>
           </th>
-          <th width="10%">
+<th width="10%">
             <center>สถานะ</center>
           </th>
-
-
 
         </tr>
       </thead>
@@ -262,6 +222,7 @@ else{
         $result = mysqli_query($conn, $sql_pay);
         if ($result->num_rows > 0) {
           $i = 0;
+          $sumpayto  =0;
           while ($row = $result->fetch_assoc()) {
             $payid = $row['pay_id'];
             $pay_date = $row['pay_date'];
@@ -278,7 +239,8 @@ else{
               $cus_status1 = 'ยกเลิก';
             }
             $i++;
-
+            
+            $sumpayto += $pay_to ;
 
 
         ?>
@@ -291,7 +253,7 @@ else{
                 <?php echo $pay_pd_name; ?>
               </td>
               <td>
-                <?php echo $pay_date; ?>
+                <?php echo  DateThai ($pay_date); ?>
               </td>
               
               <td class="text-center border-bottom">
@@ -303,16 +265,16 @@ else{
               <td class="text-center border-bottom">
                 <?php echo $am_pay; ?>
               </td>
+              
               <td class="text-right border-bottom">
                 <?php echo number_format($pay_dis, 2); ?>
               </td>
-              <td class="text-right border-bottom">
+                <td class="text-right border-bottom">
                 <?php echo number_format($pay_to, 2); ?>
               </td>
               <td class="text-center border-bottom">
                 <?php echo $cus_status1; ?>
               </td>
-
             </tr>
 
       </tbody>
@@ -321,6 +283,16 @@ else{
         }
 
   ?>
+
+<tr class="border-top">
+                <td style="border-left:none; border-left:none;" colspan="7" rowspan="6" class="text-center">ราคารวม</td>
+                <td class="text-right border-bottom" colspan="1"><?php echo number_format($sumpayto,2); ?>
+                <td class="text-center border-bottom" >บาท</td>
+            </tr>
+            
+
+
+
     </table>
 
   </div>

@@ -15,6 +15,7 @@ $date_emp1 = $_POST['date_emp_pro1'];
 $date_emp2 = $_POST['date_emp_pro2'];
 $month_emp = $_POST['month_emp_pro'];
 $year_emp = $_POST['month_year_emp_pro'];
+echo $year_emp ;
 function month($strDate)
 {
 
@@ -24,6 +25,12 @@ function month($strDate)
     return "$strMonthThai";   
 }
 month($month_emp);
+function yearThai1($start)
+{
+    $strYear = date("Y", strtotime($start)) + 543;
+    
+    return $strYear;
+}
 function DateThai1($start)
 {
     $strYear = date("Y", strtotime($start)) + 543;
@@ -33,19 +40,35 @@ function DateThai1($start)
     return $show;
 }
 DateThai1($date_emp1 && $date_emp2);
+function DateThai($strDate)
+{
+    $strYear = date("Y", strtotime($strDate)) + 543;
+    $strMonth = date("n", strtotime($strDate));
+    $strDay = date("j", strtotime($strDate));
+    $strHour = date("H", strtotime($strDate));
+    $strMinute = date("i", strtotime($strDate));
+    if ($strDay < 10) {
+        $strDay = "0" . $strDay;
+      
+    }
+    if ($strMonth < 10) {
+        $strMonth ="0".$strMonth;
+    }
+    return "$strDay/$strMonth/$strYear $strHour:$strMinute";
+}
 
 if($type!='0' &&$status_e!='2'){ 
-  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status AS status,emp_bd
+  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
   ,tb_permissions.type_per AS type_per
   ,tb_permissions.status AS status
   FROM tb_employees
   LEFT JOIN tb_permissions ON tb_permissions.emp_id =tb_employees.emp_id
-  WHERE type_per = '$type' AND tb_employees.status = '$status_e'
+  WHERE type_per = '$type' AND tb_employees.status_emp  = '$status_e'
   ORDER BY emp_id ASC";
   $title = "รายงานพนักงาน";
   
 }else if($type !='0'){
-  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status AS status,emp_bd
+  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
   ,tb_permissions.type_per AS type_per
   ,tb_permissions.status AS status
   FROM tb_employees
@@ -55,16 +78,16 @@ if($type!='0' &&$status_e!='2'){
   $title = "รายงานพนักงาน (สิทธิ์การใช้งาน)";
  
 }else if ($status_e!='2'){
-  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status AS status,emp_bd
+  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
   ,tb_permissions.type_per AS type_per
   ,tb_permissions.status AS status
   FROM tb_employees
   LEFT JOIN tb_permissions ON tb_permissions.emp_id =tb_employees.emp_id
-  WHERE  tb_employees.status = '$status_e'
+  WHERE  tb_employees.status_emp = '$status_e'
   ORDER BY emp_id ASC";
   $title = "รายงานพนักงาน (สถานะการทำงาน)";
 }else if ($date_emp1!=''&&$date_emp2!=''){
-  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status AS status,emp_bd
+  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
   ,tb_permissions.type_per AS type_per
   ,tb_permissions.status AS status
   FROM tb_employees
@@ -72,29 +95,31 @@ if($type!='0' &&$status_e!='2'){
   WHERE  DATE(emp_bd) BETWEEN '$date_emp1' AND '$date_emp2'
   ORDER BY emp_id ASC";
   $title = "รายงานพนักงานที่เข้าทำงานวันที่ ".DateThai1($date_emp1)." ถึง ".DateThai1($date_emp2);
-}else if ($month_emp!='0'){
-  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status AS status,emp_bd
+  
+
+}else if ($month_emp!='0'&& $year_emp!='0'){
+  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
   ,tb_permissions.type_per AS type_per
   ,tb_permissions.status AS status
   FROM tb_employees
   LEFT JOIN tb_permissions ON tb_permissions.emp_id =tb_employees.emp_id
-  WHERE   MONTH(emp_bd) ='$month_emp'
+  WHERE   MONTH(emp_bd) ='$month_emp' AND YEAR(emp_bd) ='$year_emp'
   ORDER BY emp_id ASC";
-  $title = 'รายงานพนักงานที่เข้าทำงานเดือน '. month($month_emp);
+  $title = 'รายงานพนักงานที่เข้าทำงานเดือน '. month($month_emp)." "."ปี"." ".yearThai1($year_emp);
   
 }else if ($year_emp!='0'){
-  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status AS status,emp_bd
+  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
   ,tb_permissions.type_per AS type_per
   ,tb_permissions.status AS status
   FROM tb_employees
   LEFT JOIN tb_permissions ON tb_permissions.emp_id =tb_employees.emp_id
   WHERE   YEAR(emp_bd) ='$year_emp'
   ORDER BY emp_id ASC";
-  $title = 'รายงานพนักงานที่เข้าทำงานปี'." ". $year_emp;
+  $title = 'รายงานพนักงานที่เข้าทำงานปี'." ".yearThai1($year_emp);
   
 }
 else{
-  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status AS status,emp_bd
+  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
   ,tb_permissions.type_per AS type_per
   ,tb_permissions.status AS status
   FROM tb_employees
@@ -119,7 +144,9 @@ else{
 <body>
   <br>
   <div class="container">
+
     <table width="100%">
+    
       <tr>
         <td width="150px" style="vertical-align: top"><img height="48px" src="images/logo-sm.PNG" alt=""></td>
 
@@ -133,7 +160,7 @@ else{
       </tr>
       <tr>
         <td>อ.เมือง จ.พิจิตร 66000</td>
-        <td width="20%" class="text-right">วันออก :<?=$d?> </td>
+        <td width="20%" class="text-right">วันออก : <?=  DateThai ($d)?> </td>
       </tr>
       <tr>
         <td>เบอร์โทรศัพท์. 094-763-0932</td>
@@ -180,7 +207,7 @@ else{
             $empid = $row['emp_id'];
             $empname = $row['emp_name'];
             $empsur = $row['emp_surname'];
-            $status_emp = $row['status'];
+            $status_emp = $row['status_emp'];
             $status_per = $row['emp_bd'];
             $type_per = $row['type_per'];
             if ($type_per == '1') {
@@ -188,7 +215,7 @@ else{
             } else if ($type_per == '2') {
               $cus_per = 'ผู้ใช้ระบบ';
             } else {
-              $cus_per = 'ยังไม่กำหนดสิทธิ์';
+              $cus_per = '-';
             }
 
             if ($status_emp == '1') {
@@ -220,7 +247,7 @@ else{
                 <?php echo $cus_per; ?>
               </td>
               <td class="text-center border-bottom">
-                <?php echo $status_per; ?>
+                <?php echo DateThai1 ($status_per); ?>
               </td>
 
             </tr>

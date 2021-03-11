@@ -12,6 +12,22 @@ $type_pro = $_POST['type_pro'];
  $gr_pro = $_POST['gr_pro'];
 $si_pro = $_POST['si_pro'];
 $co_pro = $_POST['co_pro']; 
+function DateThai($strDate)
+{
+    $strYear = date("Y", strtotime($strDate)) + 543;
+    $strMonth = date("n", strtotime($strDate));
+    $strDay = date("j", strtotime($strDate));
+    $strHour = date("H", strtotime($strDate));
+    $strMinute = date("i", strtotime($strDate));
+    if ($strDay < 10) {
+        $strDay = "0" . $strDay;
+      
+    }
+    if ($strMonth < 10) {
+        $strMonth ="0".$strMonth;
+    }
+    return "$strDay/$strMonth/$strYear $strHour:$strMinute";
+}
  
 if($type_pro!='0'&& $gr_pro !='0'&&$si_pro!='0'&&$co_pro!='0'){
  $sql_emp_re = "SELECT tb_product.pd_id AS pd_id,pd_name,pd_group,tb_product.status AS status
@@ -177,7 +193,7 @@ ORDER BY pd_id ASC";
       </tr>
       <tr>
         <td>อ.เมือง จ.พิจิตร 66000</td>
-        <td width="250px" class="text-right">วันออก :<?=$d?> </td>
+        <td width="250px" class="text-right">วันออก :<?= DateThai ($d)?> </td>
       </tr>
       <tr>
         <td>เบอร์โทรศัพท์. 094-763-0932</td>

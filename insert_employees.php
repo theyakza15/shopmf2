@@ -57,7 +57,7 @@ if (!empty($_FILES['upload_emp']['name'])) {
     copy($_FILES['upload_emp']['tmp_name'], "images/" . $new_file_name);
     $sql_add_emp = "INSERT INTO tb_employees
     (emp_id,emp_name,emp_surname,emp_czid,emp_bd,emp_number,emp_email,emp_sex,emp_numhome,emp_muu
-    ,emp_alley,emp_road,emp_county,emp_district,emp_province,emp_posnum,emp_pic,status,status_per)
+    ,emp_alley,emp_road,emp_county,emp_district,emp_province,emp_posnum,emp_pic,status_emp,status_per)
     VALUES('$sum','$emp_name','$emp_surname','$emp_czid','$emp_hbd','$emp_number','$emp_email','$emp_sex','$emp_numhome'
     ,'$emp_muu','$emp_alley','$emp_road','$emp_county','$emp_district','$emp_province','$emp_postal_number','$new_file_name','1','0')";
 

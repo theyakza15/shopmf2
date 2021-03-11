@@ -11,7 +11,7 @@ tb_employees.status_per AS status_per
 ,tb_employees.emp_surname AS emp_surname
 FROM tb_permissions
 INNER JOIN tb_employees ON tb_employees.emp_id = tb_permissions.emp_id
-WHERE username = '$username' AND password ='$password' AND tb_employees.status = '1' AND tb_employees.status_per ='1'
+WHERE username = '$username' AND password ='$password' AND tb_employees.status_emp = '1' AND tb_employees.status_per ='1'
 ORDER BY emp_id ASC ";
 $result = mysqli_query($conn, $sql_login);
 if ($result->num_rows > 0) {
