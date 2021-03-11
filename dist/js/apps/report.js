@@ -501,73 +501,73 @@ $("#paym").on("change", function () {
         $('#month_year_pay_pro').val(0)
         $('#status_pay').val(0) */
      if (id==4){//เดือน
-        $("#sale_sto").attr("readonly", true);
+        /* $("#sale_sto").attr("readonly", true);
         $("#si_pay").attr("readonly", true);
-        $("#co_pay").attr("readonly", true);
+        $("#co_pay").attr("readonly", true); */
         $("#date_pay_pro1").attr("readonly", true);
         $("#date_pay_pro2").attr("readonly", true);
         $("#month_pay_pro").attr("readonly", false);
         $("#month_year_pay_pro").attr("readonly", true);
-       // $("#status_sto").attr("readonly", false);
-        $('#sale_sto').val(0)
+        $("#status_sto").attr("readonly", false);
+        /* $('#sale_sto').val(0)
         $('#si_pay').val(0)
-        $('#co_pay').val(0)
+        $('#co_pay').val(0) */
         $('#date_pay_pro1').val(0)
         $('#date_pay_pro2').val(0)
         $('#month_pay_pro').val(0)
         $('#month_year_pay_pro').val(0)
-//$('#status_pay').val(0)
+        $('#status_pay').val(2)
     }else if (id==5){//ปี
-        $("#sale_sto").attr("readonly", true);
+        /* $("#sale_sto").attr("readonly", true);
         $("#si_pay").attr("readonly", true);
-        $("#co_pay").attr("readonly", true);
+        $("#co_pay").attr("readonly", true); */
         $("#date_pay_pro1").attr("readonly", true);
         $("#date_pay_pro2").attr("readonly", true);
         $("#month_pay_pro").attr("readonly", true);
         $("#month_year_pay_pro").attr("readonly", false);
-       // $("#status_pay").attr("readonly", false);
-        $('#sale_sto').val(0)
+        $("#status_pay").attr("readonly", false);
+        /* $('#sale_sto').val(0)
         $('#si_pay').val(0)
-        $('#co_pay').val(0)
+        $('#co_pay').val(0) */
         $('#date_pay_pro1').val(0)
         $('#date_pay_pro2').val(0)
         $('#month_pay_pro').val(0)
         $('#month_year_pay_pro').val(0)
-        //$('#status_pay').val(0)
+        $('#status_pay').val(2)
     }else if (id==6){//กำหนดเอง
-        $("#sale_sto").attr("readonly", true);
+        /* $("#sale_sto").attr("readonly", true);
         $("#si_pay").attr("readonly", true);
-        $("#co_pay").attr("readonly", true);
+        $("#co_pay").attr("readonly", true); */
         $("#date_pay_pro1").attr("readonly", false);
         $("#date_pay_pro2").attr("readonly", false);
         $("#month_pay_pro").attr("readonly", true);
         $("#month_year_pay_pro").attr("readonly", true);
-       // $("#status_pay").attr("readonly", false);
-        $('#sale_sto').val(0)
+        $("#status_pay").attr("readonly", false);
+        /* $('#sale_sto').val(0)
         $('#si_pay').val(0)
-        $('#co_pay').val(0)
+        $('#co_pay').val(0) */
         $('#date_pay_pro1').val(0)
         $('#date_pay_pro2').val(0)
         $('#month_pay_pro').val(0)
         $('#month_year_pay_pro').val(0)
-       // $('#status_pay').val(0)
+        $('#status_pay').val(2)
     }else if (id==7){//สถานะ
-        $("#sale_sto").attr("readonly", true);
+        /* $("#sale_sto").attr("readonly", true);
         $("#si_pay").attr("readonly", true);
-        $("#co_pay").attr("readonly", true);
+        $("#co_pay").attr("readonly", true); */
         $("#date_pay_pro1").attr("readonly", true);
         $("#date_pay_pro2").attr("readonly", true);
         $("#month_pay_pro").attr("readonly", true);
         $("#month_year_pay_pro").attr("readonly", true);
-       // $("#status_pay").attr("readonly", false);
-        $('#sale_sto').val(0)
+        $("#status_pay").attr("readonly", false);
+        /* $('#sale_sto').val(0)
         $('#si_pay').val(0)
-        $('#co_pay').val(0)
+        $('#co_pay').val(0) */
         $('#date_pay_pro1').val(0)
         $('#date_pay_pro2').val(0)
         $('#month_pay_pro').val(0)
         $('#month_year_pay_pro').val(0)
-//$('#status_pay').val(0)
+        $('#status_pay').val(2)
     }             
     else { //all
         $("#sale_sto").attr("readonly", true);
@@ -577,7 +577,7 @@ $("#paym").on("change", function () {
         $("#date_pay_pro2").attr("readonly", true);
         $("#month_pay_pro").attr("readonly", true);
         $("#month_year_pay_pro").attr("readonly", true);
-       // $("#status_pay").attr("readonly", true);
+        $("#status_pay").attr("readonly", true);
         $('#sale_sto').val(0)
         $('#si_pay').val(0)
         $('#co_pay').val(0)
@@ -585,7 +585,7 @@ $("#paym").on("change", function () {
         $('#date_pay_pro2').val(0)
         $('#month_pay_pro').val(0)
         $('#month_year_pay_pro').val(0)
-       // $('#status_pay').val(0)
+        $('#status_pay').val(2)
     }
 
 

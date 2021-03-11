@@ -29,7 +29,7 @@
                                          <option value="6">วันที่</option>
                                         <option value="4">เดือน</option>
                                         <option value="5">ปี</option>
-                                        <!-- <option value="7">สถานะ</option> -->
+                                         <option value="7">สถานะ</option> 
                                         
                                     </select>
                                     <span class="error_select"></span>
@@ -197,7 +197,7 @@ for ($i = 2560; $i < $count; $i++) {
                         </div>
                         <span style="color:red"> *</span>
                     </div>
-                    <!-- <div class="row">
+                     <div class="row">
                         <div class="col-4" align="right">
                             <label>สถานะ : </label>
                         </div>
@@ -205,9 +205,9 @@ for ($i = 2560; $i < $count; $i++) {
                             <div class="dropdown">
                                 <div class="form-group">
                                     <select id="status_pay" class="form-control" name="status_pay"readonly>
-                                        <option selected value="0">----โปรดเลือก----</option>
-                                        <option value="1">กำลังใช้งาน</option>
-                                        <option value="2">ยกเลิก</option>
+                                        <option selected value="2">----โปรดเลือก----</option>
+                                        <option value="1">ปกติ</option>
+                                        <option value="0">ยกเลิก</option>
                                         
                                     </select>
                                     <span class="error_select"></span>
@@ -215,7 +215,7 @@ for ($i = 2560; $i < $count; $i++) {
                             </div>
                         </div>
                         <span style="color:red"> *</span>
-                    </div> -->
+                    </div> 
 
                 <div class="row">
                   <div class="col-6">

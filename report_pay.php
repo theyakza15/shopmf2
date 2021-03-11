@@ -15,6 +15,7 @@ $date_pay_pro1 = $_POST['date_pay_pro1'];
 $date_pay_pro2 = $_POST['date_pay_pro2'];
 $month_pay_pro = $_POST['month_pay_pro'];
 $month_year_pay_pro = $_POST['month_year_pay_pro'];
+$status_pay = $_POST['status_pay'];
 function month($strDate)
 {
 
@@ -88,8 +89,8 @@ DateThai1($date_pay_pro1 && $date_pay_pro2);
   ORDER BY pay_id ASC";
   $title = "รายงานยอดขาย (สี)"; */
   
- if ($date_pay_pro1!=''&&$date_pay_pro2!='') {
-  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay
+ if ($date_pay_pro1!=''&&$date_pay_pro2!=''&&$status_pay!='2') {
+  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
   ,tb_product.pd_name AS pd_name
   ,paymant.type_pay AS type_pay
@@ -102,12 +103,12 @@ DateThai1($date_pay_pro1 && $date_pay_pro2);
   INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det = tb_color_detail.pd_id
   INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
   INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
-  WHERE DATE(pay_date) BETWEEN '$date_pay_pro1' AND '$date_pay_pro2'
+  WHERE DATE(pay_date) BETWEEN '$date_pay_pro1' AND '$date_pay_pro2' AND status_pay_det ='$status_pay'
   ORDER BY pay_id ASC";
   $title = 'รายงานยอดขายวันที่ '.DateThai1($date_pay_pro1)." ถึง ".DateThai1($date_pay_pro2);;
   
-}else if ($month_pay_pro!='0') {
-  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay
+}else if ($month_pay_pro!='0'&&$status_pay!='2') {
+  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
   ,tb_product.pd_name AS pd_name
   ,paymant.type_pay AS type_pay
@@ -120,12 +121,12 @@ DateThai1($date_pay_pro1 && $date_pay_pro2);
   INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det = tb_color_detail.pd_id
   INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
   INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
-  WHERE MONTH(pay_date) ='$month_pay_pro' 
+  WHERE MONTH(pay_date) ='$month_pay_pro'  AND status_pay_det ='$status_pay'
   ORDER BY pay_id ASC";
   $title = 'รายงานยอดขายเดือน '. month($month_pay_pro);
   
-}else if ($month_year_pay_pro!='0') {
-  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay
+}else if ($month_year_pay_pro!='0'&&$status_pay!='2') {
+  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
   ,tb_product.pd_name AS pd_name
   ,paymant.type_pay AS type_pay
@@ -138,13 +139,31 @@ DateThai1($date_pay_pro1 && $date_pay_pro2);
   INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det = tb_color_detail.pd_id
   INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
   INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
-  WHERE YEAR(pay_date) ='$month_year_pay_pro' 
+  WHERE YEAR(pay_date) ='$month_year_pay_pro'  AND status_pay_det ='$status_pay'
   ORDER BY pay_id ASC";
   $title = 'รายงานยอดขายปีที่ '.$month_year_pay_pro;
   
+}else if ($status_pay!='2') {
+  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
+  ,paymant.pay_date AS pay_date
+  ,tb_product.pd_name AS pd_name
+  ,paymant.type_pay AS type_pay
+  ,tb_color.co_name AS co_name
+  ,tb_size.si_name AS si_name
+  FROM paymant_detail
+  INNER JOIN paymant ON paymant.pay_id = paymant_detail.pay_id
+  INNER JOIN tb_color_detail  ON tb_color_detail.id_color_det = paymant_detail.pay_pd_id
+  INNER JOIN tb_color ON tb_color.co_id = tb_color_detail.id_color
+  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det = tb_color_detail.pd_id
+  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
+  INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
+  WHERE  status_pay_det ='$status_pay'
+  ORDER BY pay_id ASC";
+  $title = 'รายงานสถานะยอดขาย ';
+  echo 1 ;
 }
 else{
-  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay
+  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
   ,tb_product.pd_name AS pd_name
   ,paymant.type_pay AS type_pay
@@ -228,7 +247,9 @@ else{
           <th width="10%">
             <center>ราคาสุทธิ</center>
           </th>
-
+          <th width="10%">
+            <center>สถานะ</center>
+          </th>
 
 
 
@@ -250,7 +271,12 @@ else{
             $am_pay = $row['amount_pay'];
             $co_pay = $row['co_name'];
             $si_pay = $row['si_name'];
-            
+            $status_pay = $row['status_pay_det'];
+            if ($status_pay == '1') {
+              $cus_status1 = 'ปกติ';
+            } else if ($status_pay == '0') {
+              $cus_status1 = 'ยกเลิก';
+            }
             $i++;
 
 
@@ -283,7 +309,9 @@ else{
               <td class="text-right border-bottom">
                 <?php echo number_format($pay_to, 2); ?>
               </td>
-
+              <td class="text-center border-bottom">
+                <?php echo $cus_status1; ?>
+              </td>
 
             </tr>
 

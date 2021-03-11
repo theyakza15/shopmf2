@@ -386,9 +386,9 @@ $group_id = $tmp1 . $sub_date . $a;
                                     <th>ลำดับ</th>
                                     <th>รหัส</th>
                                     <th>ประเภทสินค้า</th>
-                                    <th>ชนิดสินค้า</th>
+                                    <th>กลุ่มสินค้า</th>
                                     <th>สถานะ</th>
-                                    <th class="sta">#</th>
+                                    <th class="sta">วิธีการ</th>
                                 </thead>
 
 
@@ -653,7 +653,7 @@ $group_id = $tmp1 . $sub_date . $a;
                                 <th>รหัส</th>
                                 <th>Size</th>
                                 <th>สถานะ</th>
-                                <th class="sta">#</th>
+                                <th class="sta">วิธีการ</th>
                             </thead>
                             <?php
                             $sql_size = "SELECT si_id,si_name,status 
@@ -856,7 +856,7 @@ $group_id = $tmp1 . $sub_date . $a;
                                 <th>รหัสสี</th>
                                 <th>ชื่อสี</th>
                                 <th>สถานะ</th>
-                                <th class="sta">#</th>
+                                <th class="sta">วิธีการ</th>
                             </thead>
                             <?php
 
@@ -1061,7 +1061,7 @@ ORDER BY co_id ASC";
                                 <th>ลำดับ</th>
                                 <th>รหัสส่วนลด</th>
                                 <th>ชื่อสินค้า</th>
-                                <th>ส่วนลด(เปอร์เซ็นต์)</th>
+                                <th>ส่วนลด(บาทต่อตัว)</th>
                                 <th>จำนวนขั้นต่ำ</th>
                                 <th>วิธีการ</th>
                             </thead>

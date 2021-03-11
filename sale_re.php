@@ -35,8 +35,6 @@ function DateThai($strDate)
         <div class="card shadow">
             <div class="card-body">
                 <div class="nav-wrapper">
-
-
                 </div>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -48,8 +46,6 @@ function DateThai($strDate)
                                         <th>ลำดับ</th>
                                         <th>รหัสการขาย</th>
                                         <th>วันที่ขาย</th>
-                                        
-
                                         <th>ส่วนลด</th>
                                         <th>ราคาสุทธิ</th>
                                         <th>วิธีการ</th>
@@ -58,7 +54,7 @@ function DateThai($strDate)
                                    $sql_pay = "SELECT pay_id,dis_id,discount,total,pay_date,status_pay,type_pay
                                    FROM paymant
                                    WHERE status_pay=1   
-                                   ORDER BY pay_id ASC";
+                                   ORDER BY pay_id DESC";
                                     $result = mysqli_query($conn, $sql_pay);
                                     if ($result->num_rows > 0) {
                                         $i = 0;
@@ -107,8 +103,11 @@ function DateThai($strDate)
                                                 </td>
                                                 </td>
                                                 <td class="sta">
-                                                <button type='button' id="btn_print" class='<?= $color ?>' data-toggle="tooltip" data=" " data-id="<?=$payid?>" >พิมพ์</button>
-                                                <button type='button' id="cancel_sale" class='<?= $color ?>' data-toggle="tooltip" data=" " ><i class="<?= $image ?>" style="color:white"></i></span></button>
+                                                <button type='button' class='btn btn-warning btn-sm' id="btn_print"  class='<?= $color ?>' data-toggle="tooltip" data=" " data-id="<?=$payid?>" >พิมพ์</button>
+
+                                                <!-- <a href="#viwe_sale_re<?= $payid ?>" data-toggle="modal">
+                                                <button type='button' class='btn btn-info btn-sm' id="viwe_sale_re" class='<?= $color ?>'  data="<?= $payid ?>" data-toggle="tooltip" title="แสดงข้อมูล" ><i class="fas fa-file-alt"></i></span></button>
+                                                </a> -->
                                                 <button type='button' id="remove" data-id="<?=$payid?>" class='<?= $color ?>' data-toggle="tooltip" data=" " ><i class="<?= $image ?>" style="color:white"></i></span></button>
                                                 </td>
 
@@ -133,6 +132,13 @@ function DateThai($strDate)
         </div>
     </div>
 </div>
+
+
+<?php
+require("./modal/stock/pay_re_viwe.php");
+?>
+
+
 
 <div class="modal fade" id="signupModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-signup" role="document">

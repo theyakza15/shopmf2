@@ -1,3 +1,6 @@
+<script>
+window.print()
+</script>
 <?php
 @session_start();
 require('connect.php');
