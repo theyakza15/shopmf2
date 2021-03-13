@@ -41,6 +41,7 @@ $date_pay_pro2 = $_POST['date_pay_pro2'];
 $month_pay_pro = $_POST['month_pay_pro'];
 $month_year_pay_pro = $_POST['month_year_pay_pro'];
 $status_pay = $_POST['status_pay'];
+$check=0;
 function month($strDate)
 {
 
@@ -58,6 +59,7 @@ function DateThai1($start)
     $show = $strDay . "/" . $strMonth . "/" . $strYear;
     return $show;
 }
+
 DateThai1($date_pay_pro1 && $date_pay_pro2);
 function DateThai($strDate)
 {
@@ -128,15 +130,22 @@ function DateThai($strDate)
   INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
   WHERE YEAR(pay_date) ='$month_year_pay_pro'  AND status_pay_det ='$status_pay'
   ORDER BY pay_id ASC";
-  $title = 'รายงานยอดขายปีที่ '.$month_year_pay_pro;
+//แปลงปี ใช้ตรงนี้
+ $convert_date = $month_year_pay_pro."-01-01";
+  $strYear = date("Y", strtotime($convert_date)) + 543;
+  $title = 'รายงานยอดขายปีที่ '.$strYear;
+  // แปลงปี ใช้ตรงนี้
   
-}else if ($status_pay!='2') {
+}
+else if ($status_pay=='1') {
   $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
   ,tb_product.pd_name AS pd_name
   ,paymant.type_pay AS type_pay
   ,tb_color.co_name AS co_name
   ,tb_size.si_name AS si_name
+
+
   FROM paymant_detail
   INNER JOIN paymant ON paymant.pay_id = paymant_detail.pay_id
   INNER JOIN tb_color_detail  ON tb_color_detail.id_color_det = paymant_detail.pay_pd_id
@@ -144,10 +153,33 @@ function DateThai($strDate)
   INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det = tb_color_detail.pd_id
   INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
   INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
+
   WHERE  status_pay_det ='$status_pay'
   ORDER BY pay_id ASC";
-  $title = 'รายงานสถานะยอดขาย ';
-  
+  $title = 'รายงานสถานะยอดขาย (ปกติ) ';
+
+}else if ($status_pay!='2') {
+  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
+  ,paymant.pay_date AS pay_date
+  ,tb_product.pd_name AS pd_name
+  ,paymant.type_pay AS type_pay
+  ,tb_color.co_name AS co_name
+  ,tb_size.si_name AS si_name
+  ,tb_employees.emp_name
+  ,tb_employees.emp_surname
+
+  FROM paymant_detail
+  INNER JOIN paymant ON paymant.pay_id = paymant_detail.pay_id
+  INNER JOIN tb_color_detail  ON tb_color_detail.id_color_det = paymant_detail.pay_pd_id
+  INNER JOIN tb_color ON tb_color.co_id = tb_color_detail.id_color
+  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det = tb_color_detail.pd_id
+  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
+  INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
+  INNER JOIN tb_employees ON tb_employees.emp_id = paymant.emp_can
+  WHERE  status_pay_det ='$status_pay'
+  ORDER BY pay_id ASC";
+  $title = 'รายงานสถานะยอดขาย (ยกเลิก)';
+  $check =1;
 }
 else{
   $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
@@ -166,6 +198,7 @@ else{
   ORDER BY pay_id ASC";
   $title = "รายงานยอดขายทั้งหมด";
 }
+$sumpayto  =0;
 ?>
 
 <head>
@@ -207,7 +240,129 @@ else{
       </th>
     </tr>
     <thead>
-    <tbody>
+    <?php
+    if($check==1){
+      ?>
+      <tbody>
+      <tr>
+        <td>
+          <h3>
+            <center><?=$title?></center>
+          </h3>
+          <table class="table" border="1" width="100%">
+            <thead>
+
+            <tr>
+          <th width="1%">
+            <center>ลำดับ</center>
+          </th>
+          <th width="20%">
+            <center>รายการ</center>
+          </th>
+         
+          
+          <th width="5%">
+            <center>ไซส์</center>
+          </th>
+          <th width="5%">
+            <center>สี</center>
+          </th>
+          <th width="5%">
+            <center>จำนวนที่ขาย</center>
+          </th>
+          
+
+          <th width="10%">
+            <center>ส่วนลด</center>
+          </th>
+  
+          <th width="10%">
+            <center>ราคาสุทธิ</center>
+          </th>
+          <th width="30%">
+            <center>ยกเลิกโดย</center>
+          </th>
+          <th width="20%">
+            <center>วันที่ยกเลิก</center>
+          </th>
+        </tr>
+
+        <?php
+        
+
+        $result = mysqli_query($conn, $sql_pay);
+        if ($result->num_rows > 0) {
+          $i = 0;
+    
+          while ($row = $result->fetch_assoc()) {
+            $payid = $row['pay_id'];
+            $pay_date = $row['pay_date'];
+            $pay_pd_name = $row['pd_name'];
+            $pay_dis = $row['total_dis_co'];
+            $pay_to = $row['pay_total'];
+            $am_pay = $row['amount_pay'];
+            $co_pay = $row['co_name'];
+            $si_pay = $row['si_name'];
+            $status_pay = $row['status_pay_det'];
+            $fname = $row['emp_name'];
+            $lname = $row['emp_surname'];
+            if ($status_pay == '1') {
+              $cus_status1 = 'ปกติ';
+            } else if ($status_pay == '0') {
+              $cus_status1 = 'ยกเลิก';
+            }
+            $i++;
+            
+            $sumpayto += $pay_to ;
+
+
+        ?>
+                 <tr>
+
+<td class="text-center border-bottom">
+  <?php echo $i; ?>
+</td>
+<td>
+  <?php echo $pay_pd_name; ?>
+</td>
+<td>
+<?php echo $si_pay; ?>
+ 
+</td>
+
+<td class="text-center border-bottom">
+<?php echo $co_pay; ?>
+</td>
+<td class="text-center border-bottom">
+<?php echo $am_pay; ?>
+</td>
+<td class="text-center border-bottom">
+<?php echo number_format($pay_dis, 2); ?>
+</td>
+
+<td class="text-right border-bottom">
+<?php echo number_format($pay_to, 2); ?>
+</td>
+  <td class="text-right border-bottom">
+  <?php echo $fname.'  '.$lname; ?>
+</td>
+<td class="text-center border-bottom">
+<?php echo  DateThai ($pay_date); ?>
+</td>
+</tr>
+
+
+    </tbody>
+<?php
+                }
+              }
+
+
+?>
+      <?php
+    }else{
+     ?>
+     <tbody>
       <tr>
         <td>
           <h3>
@@ -320,14 +475,30 @@ else{
 
 
 ?>
+      <?php
+    }
+    ?>
+    
 
-
-<tr class="border-top">
+<?php 
+if($sumpayto >0){
+  ?>
+  <tr class="border-top">
                 <td style="border-left:none; border-left:none;" colspan="7" rowspan="6" class="text-center">ราคารวม</td>
                 <td class="text-right border-bottom" colspan="1"><?php echo number_format($sumpayto,2); ?>
                 <td class="text-center border-bottom" >บาท</td>
             </tr>
 
+  <?php
+}else{
+  ?>
+    <tr class="border-top">
+                <td style="border-left:none; border-left:none;" colspan="9" rowspan="6" class="text-center">ไม่พบข้อมูล</td>
+                
+            </tr>
+  <?php
+}
+?>
 
 
 
