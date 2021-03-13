@@ -197,6 +197,7 @@ if($type_pro!='0'&& $gr_pro !='0'&&$si_pro!='0'&&$co_pro!='0'){
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
+
 <div style = "margin:auto;  height : 40px; width :200px"></div>
 <table style = "margin:auto">
   <thead>

@@ -1,6 +1,34 @@
 <script>
 window.print()
 </script>
+<style>
+  .header {
+    padding: 20px 0 20px 0;
+    margin-bottom: 20px;
+    overflow: auto;
+    border-bottom: 2px solid #0095c8;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .content {
+    width: 100%;
+    padding: 10px;
+    height: 70px;
+    border-bottom: 1px solid;
+    text-align: center;
+
+  }
+
+  @media print {
+    button {
+      display: none;
+    }
+
+  }
+</style>
 <?php
 @session_start();
 require('connect.php');
@@ -149,38 +177,46 @@ else{
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
-<body>
-  <br>
-  <div class="container">
-    <table width="100%">
-      <tr>
-        <td width="150px" style="vertical-align: top"><img height="48px" src="images/logo-sm.PNG" alt=""></td>
+<div style="margin:auto;  height : 40px; width :200px"></div>
+<table style="margin:auto">
+  <thead>
+    <tr>
+      <th>
+        <div class="header">
+          <div style="float:left">
+            <h1>MafearShop</h1>
+            <p>บ้านเลขที่ 4/436 ต.ในเมือง ถ.สระหลวง</p>
+            <p>อ.เมือง จ.พิจิตร 66000</p>
+            <p>เบอร์โทรศัพท์. 094-763-0932</p>
+          </div>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <div style="float:right">
+            <p>
+              <width="250px" class="text-right">วันออก :<?= DateThai($d) ?>
+            </p>
+            <p>
+              <width="150px" class="text-right">ผู้ออก :<?= $name . " " . $surname ?>
+            </p>
 
-      </tr>
-
+          </div>
+        </div>
+      </th>
+    </tr>
+    <thead>
+    <tbody>
       <tr>
         <td>
-          บ้านเลขที่ 4/436 ต.ในเมือง ถ.สระหลวง
-        </td>
-        <td width="150px" class="text-right"></td>
-      </tr>
-      <tr>
-        <td>อ.เมือง จ.พิจิตร 66000</td>
-        <td width="250px" class="text-right">วันออก :<?= DateThai ($d)?> </td>
-      </tr>
-      <tr>
-        <td>เบอร์โทรศัพท์. 094-763-0932</td>
-        <td width="150px" class="text-right">ผู้ออก :<?=$name." ".$surname?> </td>
-      </tr>
-    </table>
-    <br>
+          <h3>
+            <center><?=$title?></center>
+          </h3>
+          <table class="table" border="1" width="100%">
+            <thead>
 
-    <h3>
-      <center><?=$title?></center>
-    </h3>
-    <table class="table" border="1" width="100%">
-      <thead>
-        <tr>
+            <tr>
           <th width="1%">
             <center>ลำดับ</center>
           </th>
@@ -214,8 +250,7 @@ else{
           </th>
 
         </tr>
-      </thead>
-      <tbody>
+
         <?php
         
 
@@ -244,57 +279,64 @@ else{
 
 
         ?>
-            <tr>
+                 <tr>
 
-              <td class="text-center border-bottom">
-                <?php echo $i; ?>
-              </td>
-              <td>
-                <?php echo $pay_pd_name; ?>
-              </td>
-              <td>
-                <?php echo  DateThai ($pay_date); ?>
-              </td>
-              
-              <td class="text-center border-bottom">
-                <?php echo $si_pay; ?>
-              </td>
-              <td class="text-center border-bottom">
-                <?php echo $co_pay; ?>
-              </td>
-              <td class="text-center border-bottom">
-                <?php echo $am_pay; ?>
-              </td>
-              
-              <td class="text-right border-bottom">
-                <?php echo number_format($pay_dis, 2); ?>
-              </td>
-                <td class="text-right border-bottom">
-                <?php echo number_format($pay_to, 2); ?>
-              </td>
-              <td class="text-center border-bottom">
-                <?php echo $cus_status1; ?>
-              </td>
-            </tr>
+<td class="text-center border-bottom">
+  <?php echo $i; ?>
+</td>
+<td>
+  <?php echo $pay_pd_name; ?>
+</td>
+<td>
+  <?php echo  DateThai ($pay_date); ?>
+</td>
 
-      </tbody>
-  <?php
-          }
-        }
+<td class="text-center border-bottom">
+  <?php echo $si_pay; ?>
+</td>
+<td class="text-center border-bottom">
+  <?php echo $co_pay; ?>
+</td>
+<td class="text-center border-bottom">
+  <?php echo $am_pay; ?>
+</td>
 
-  ?>
+<td class="text-right border-bottom">
+  <?php echo number_format($pay_dis, 2); ?>
+</td>
+  <td class="text-right border-bottom">
+  <?php echo number_format($pay_to, 2); ?>
+</td>
+<td class="text-center border-bottom">
+  <?php echo $cus_status1; ?>
+</td>
+</tr>
+
+
+    </tbody>
+<?php
+                }
+              }
+
+
+?>
+
 
 <tr class="border-top">
                 <td style="border-left:none; border-left:none;" colspan="7" rowspan="6" class="text-center">ราคารวม</td>
                 <td class="text-right border-bottom" colspan="1"><?php echo number_format($sumpayto,2); ?>
                 <td class="text-center border-bottom" >บาท</td>
             </tr>
-            
 
 
 
-    </table>
 
-  </div>
+  </thead>
+</table>
 
-</body>
+</td>
+</tr>
+<tbody>
+
+
+  </table

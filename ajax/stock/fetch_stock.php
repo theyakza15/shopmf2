@@ -55,7 +55,7 @@ if (mysqli_num_rows($result) > 0) {
             $color = "btn btn-danger btn-sm";
             $txt = "ยกเลิกข้อมูล";
             $a_heft = "delete";
-            $status = 'กำลังใช้งาน';
+            $status = 'ปกติ';
         }else{
             $image = 'fas fa-check';
             $color = "btn btn-success btn-sm";

@@ -1,4 +1,32 @@
 
+<style>
+  .header {
+    padding: 20px 0 20px 0;
+    margin-bottom: 20px;
+    overflow: auto;
+    border-bottom: 2px solid #0095c8;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .content {
+    width: 100%;
+    padding: 10px;
+    height: 70px;
+    border-bottom: 1px solid;
+    text-align: center;
+
+  }
+
+  @media print {
+    button {
+      display: none;
+    }
+
+  }
+</style>
 <?php
 @session_start();
 require('connect.php');
@@ -35,48 +63,56 @@ function DateThai($strDate)
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body>
-<br>
-<div class="container">
-<table  width="100%">
-        <tr>
-            <td width="150px" style="vertical-align: top"><img height="48px" src="images/logo-sm.PNG" alt=""></td>
-            <td class="text-right" style="vertical-align: top"><h2>ใบเสร็จรับเงิน  </h2></td>
-        </tr>
-       
-        <tr>
-            <td>
-                บ้านเลขที่ 4/436 ต.ในเมือง ถ.สระหลวง
-            </td>
-            <td width="150px" class="text-right">เลขที่ใบเสร็จ :<?php echo $id; ?></td>
-        </tr> 
-        <tr>
-            <td>อ.เมือง จ.พิจิตร 66000</td>
-            <td width="150px" class="text-right">วันออก :<?php echo DateThai ($row['pay_date']) ?> </td>
-        </tr>
-        <tr>
-            <td>เบอร์โทรศัพท์. 094-763-0932</td>
-            <td width="150px" class="text-right">ผู้ออก :<?= $row['emp_name']." ".$row['emp_surname'];?> </td>
-        </tr>
-    </table>
-    <br>
 
-  <h4>รายการสินค้า</h4>    
-  <table class="table" border="1"width="100%" >
+<div style="margin:auto;  height : 40px; width :200px"></div>
+<table style="margin:auto">
+  <thead>
+    <tr>
+      <th>
+        <div class="header">
+          <div style="float:left">
+            <h1>MafearShop</h1>
+            <p>บ้านเลขที่ 4/436 ต.ในเมือง ถ.สระหลวง</p>
+            <p>อ.เมือง จ.พิจิตร 66000</p>
+            <p>เบอร์โทรศัพท์. 094-763-0932</p>
+          </div>
+
+          <div style="float:right">
+            <h2>ใบเสร็จรับเงิน </h2>
+            <p>
+              <width="150px" class="text-right"> เลขที่ใบเสร็จ :<?php echo $id; ?>
+            </p>
+            <p>
+              <width="250px" class="text-right">วันออก :<?php echo DateThai($row['pay_date']); ?>
+            </p>
+            <p>
+              <width="150px" class="text-right">ผู้ออก :<?= $row['emp_name']." ".$row['emp_surname'];?>
+            </p>
+
+          </div>
+        </div>
+      </th>
+    </tr>
     <thead>
+    <tbody>
       <tr>
+        <td>
+
+          <h4>รายการสินค้า</h4>
+
+          <table class="table" border="1" width="150%">
+            <thead>
+            <tr>
         <th width="10%"><center>ลำดับ</center></th>
         <th width="50%" ><center>รายการ</center></th>
         <th width="10%">ราคาต่อชิ้น</th>
         <th width="10%"><center>จำนวน</center></th>
-        <th width="10%"><center>ส่วนลด</center></th>
-        <th width="20%"><center>จำนวนเงิน</center></th>
+        <th width="20%"><center>ส่วนลด</center></th>
+        <th width="50%"><center>จำนวนเงิน</center></th>
         
         
       </tr>
-    </thead>
-    <tbody>
-    <?php
+      <?php
      $sql_pay ="SELECT paymant.pay_id AS pay_id,emp_id ,paymant.discount AS discount,total,pay_date,status_pay
      ,tb_product.pd_name AS pd_name
      ,paymant_detail.amount_pay AS amount_pay
@@ -116,38 +152,37 @@ function DateThai($strDate)
             
          
     ?>
-      <tr>
+              <tr>
 
-        <td class="text-center border-bottom">
-        <?php echo $i; ?>
-        </td>
-        <td >
-        <?php echo $payid." "."Size ".$pay_si ." "."สี ". $pay_co; ?>
-        </td>
-        <td class="text-right border-bottom">
-        <?php echo $price_pro; ?>
-        </td>
-        <td class="text-right border-bottom">
-        <?php echo $pay_amo; ?>
-        </td>
-        <td class="text-right border-bottom">
-        <?php echo number_format($total_dis_co,2); ?>
-        </td>
-        <td class="text-right border-bottom">
-        <?php echo number_format($sum4,2); ?>
-        </td>
-        
-      </tr> 
-            
+<td class="text-center border-bottom">
+<?php echo $i; ?>
+</td>
+<td >
+<?php echo $payid." "."Size ".$pay_si ." "."สี ". $pay_co; ?>
+</td>
+<td class="text-right border-bottom">
+<?php echo $price_pro; ?>
+</td>
+<td class="text-right border-bottom">
+<?php echo $pay_amo; ?>
+</td>
+<td class="text-right border-bottom">
+<?php echo number_format($total_dis_co,2); ?>
+</td>
+<td class="text-right border-bottom">
+<?php echo number_format($sum4,2); ?>
+</td>
 
-      <?php  
-    }
-        }
-
-        ?>
+</tr> 
 
     </tbody>
-    <tr class="border-top">
+<?php
+                }
+              }
+
+
+?>
+<tr class="border-top">
                 <td style="border-left:none; border-left:none;" colspan="4" rowspan="7" class="text-center"></td>
                 <td class="text-right border-bottom">ราคารวม</td>
                 <td class="text-right border-bottom"><?php echo number_format($total_price_sum,2); ?>
@@ -161,9 +196,12 @@ function DateThai($strDate)
                 <td class="text-right border-bottom"><?php echo number_format($total_price_sum-$pay_dis,2); ?>
                   
             </tr>
+  </thead>
+</table>
+
+</td>
+</tr>
+<tbody>
+
+
   </table>
-  
-</div>
-
-</body>
-
