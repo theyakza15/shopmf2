@@ -1,6 +1,34 @@
 <script>
 window.print()
 </script>
+<style>.header {
+  padding : 20px 0 20px 0;
+  margin-bottom:20px;
+  overflow :auto;
+  border-bottom : 2px solid #0095c8;
+}
+
+p {
+  margin : 0;
+}
+
+.content {
+  width: 100%;
+  padding : 10px;
+  height : 70px;
+  border-bottom : 1px solid;
+  text-align : center;
+  
+}
+
+@media print {
+  button {
+    display :none;
+  }
+
+}
+
+ </style>
 <?php
 @session_start();
 require('connect.php');
@@ -169,38 +197,37 @@ if($type_pro!='0'&& $gr_pro !='0'&&$si_pro!='0'&&$co_pro!='0'){
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-
-<body>
-  <br>
-  <div class="container">
-    <table width="100%">
-      <tr>
-        <td width="150px" style="vertical-align: top"><img height="48px" src="images/logo-sm.PNG" alt=""></td>
-
-        </td>
+<div style = "margin:auto;  height : 40px; width :200px"></div>
+<table style = "margin:auto">
+  <thead>
+    <tr>
+        <th>
+          <div class = "header">
+            <div style = "float:left">
+            <h1>MafearShop</h1>
+        <p>บ้านเลขที่ 4/436 ต.ในเมือง ถ.สระหลวง</p>
+         <p>อ.เมือง จ.พิจิตร 66000</p>
+         <p>เบอร์โทรศัพท์. 094-763-0932</p>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+             <div style = "float:right">
+        <p> <width="250px" class="text-right">วันออก :<?= DateThai ($d)?></p>
+        <p> <width="150px" class="text-right">ผู้ออก :<?=$name." ".$surname?></p>
+               
+            </div>   
+          </div>
+        </th>
       </tr>
-
+    <thead>
+    <tbody>
       <tr>
         <td>
-          บ้านเลขที่ 4/436 ต.ในเมือง ถ.สระหลวง
-        </td>
-        <td width="150px" class="text-right"></td>
-      </tr>
-      <tr>
-        <td>อ.เมือง จ.พิจิตร 66000</td>
-        <td width="250px" class="text-right">วันออก :<?= DateThai ($d)?> </td>
-      </tr>
-      <tr>
-        <td>เบอร์โทรศัพท์. 094-763-0932</td>
-        <td width="150px" class="text-right">ผู้ออก :<?=$name." ".$surname?> </td>
-      </tr>
-    </table>
-    <br>
-
-    <h3>
-      <center>รายงานสินค้าคลัง</center>
-    </h3>
-    <table class="table" border="1" width="100%">
+      <h3><center>รายงานสินค้าคลัง</center></h3>
+      <table class="table" border="1" width="100%">
       <thead>
 
         <tr>
@@ -227,8 +254,7 @@ if($type_pro!='0'&& $gr_pro !='0'&&$si_pro!='0'&&$co_pro!='0'){
           </th>
 
         </tr>
-      </thead>
-      <tbody>
+
         <?php
       
 
@@ -282,8 +308,15 @@ if($type_pro!='0'&& $gr_pro !='0'&&$si_pro!='0'&&$co_pro!='0'){
 
 
   ?>
-    </table>
+      </thead>
+      </table>
+          
+        </td>
+      </tr>
+   <tbody> 
+   
+ 
+</table>  
 
-  </div>
 
-</body>
+ 
