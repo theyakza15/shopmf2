@@ -1,6 +1,11 @@
+
 <?php
+@session_start();
 require 'connect.php';
+date_default_timezone_set("Asia/Bangkok");
+$ddd = date("Y-m-d H:i");
 $id=$_POST['id'];
+$empid = $_SESSION['emp_id'];
 $sql= "SELECT pay_pd_id,amount_pay FROM paymant_detail WHERE pay_id='$id' ";
 
 $result = mysqli_query($conn,$sql);
@@ -23,7 +28,7 @@ if ($result->num_rows > 0) {
     
     } 
   }
-  $update = "UPDATE paymant SET status_pay='0' WHERE pay_id='$id' ";
+  $update = "UPDATE paymant SET status_pay='0', emp_can ='$empid' , can_date = '$ddd' WHERE pay_id='$id' ";
   mysqli_query($conn,$update);
 }
 
