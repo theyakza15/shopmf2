@@ -75,10 +75,6 @@ function DateThai($strDate)
   }
   return "$strDay/$strMonth/$strYear $strHour:$strMinute";
 }
-
-
-
-
 if ($date_top_pro1 != '' && $date_top_pro2 != '') {
   $sql_pay = "SELECT  pay_pd_id,SUM(pay_total) AS pay_total,SUM(amount_pay)AS amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
@@ -96,9 +92,30 @@ if ($date_top_pro1 != '' && $date_top_pro2 != '') {
     GROUP BY det_size
     ORDER BY SUM(amount_pay) DESC
     LIMIT 5";
-
   $title = "รายงานยอดขายสูงสุดวันที่ " . DateThai1($date_top_pro1) . " ถึง " . DateThai1($date_top_pro2);
-} else if ($month_top_pro != '0') {
+ 
+}else if ($month_top_pro != '0'&&$month_year_top_pro != '0') {
+  $sql_pay = "SELECT  pay_pd_id,SUM(pay_total) AS pay_total,SUM(amount_pay)AS amount_pay,status_pay_det
+  ,paymant.pay_date AS pay_date
+  ,tb_size.si_name AS si_name
+  ,tb_product.pd_name AS pd_name
+  ,tb_color.co_name AS co_name
+    FROM paymant_detail
+    INNER JOIN paymant ON paymant.pay_id = paymant_detail.pay_id
+    INNER JOIN tb_color_detail ON tb_color_detail.id_color_det =paymant_detail.pay_pd_id
+    INNER JOIN tb_color ON tb_color.co_id = tb_color_detail.id_color
+    INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
+    INNER JOIN tb_size ON tb_size.si_id =tb_produnt_detail.det_size
+    INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
+    WHERE MONTH(pay_date) ='$month_top_pro' AND YEAR(pay_date) ='$month_year_top_pro'
+    GROUP BY det_size
+    ORDER BY SUM(amount_pay) DESC
+    LIMIT 5";
+    $convert_date = $month_year_top_pro."-01-01";
+    $strYear = date("Y", strtotime($convert_date)) + 543;
+  $title = 'รายงานยอดขายสูงสุดประจำเดือน ' . month($month_top_pro) ." "."ปี".$strYear;
+  
+}else if ($month_top_pro != '0') {
   $sql_pay = "SELECT  pay_pd_id,SUM(pay_total) AS pay_total,SUM(amount_pay)AS amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
   ,tb_size.si_name AS si_name
@@ -115,8 +132,8 @@ if ($date_top_pro1 != '' && $date_top_pro2 != '') {
     GROUP BY det_size
     ORDER BY SUM(amount_pay) DESC
     LIMIT 5";
-
   $title = 'รายงานยอดขายสูงสุดประจำเดือน ' . month($month_top_pro);
+  
 } else if ($month_year_top_pro != '0') {
   $sql_pay = "SELECT  pay_pd_id,SUM(pay_total) AS pay_total,SUM(amount_pay)AS amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
@@ -134,9 +151,12 @@ if ($date_top_pro1 != '' && $date_top_pro2 != '') {
     GROUP BY det_size
     ORDER BY SUM(amount_pay) DESC
     LIMIT 5";
-
-  $title = "รายงานยอดขายสูงสุดปี " . "  " . $month_year_top_pro;
-} else {
+    $convert_date = $month_year_top_pro."-01-01";
+    $strYear = date("Y", strtotime($convert_date)) + 543;
+  
+  $title = "รายงานยอดขายสูงสุดปี " . "  " . $strYear;
+ 
+}else {
   $sql_pay = "SELECT  pay_pd_id,SUM(pay_total) AS pay_total,SUM(amount_pay)AS amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
   ,tb_size.si_name AS si_name
@@ -153,7 +173,11 @@ if ($date_top_pro1 != '' && $date_top_pro2 != '') {
     ORDER BY SUM(amount_pay) DESC
     LIMIT 5";
   $title = "รายงานยอดขายสูงสุดทั้งหมด";
+  
 }
+
+
+
 ?>
 
 <head>

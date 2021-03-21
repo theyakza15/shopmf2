@@ -66,7 +66,7 @@ include("sidebar.php");
 
 
                   <div class="col-md-5">
-                    <select class="form-control sel_type" id="year" name="year">
+                  <select class="form-control sel_type" id="year" name="year">
                       <option selected value="">----โปรดเลือก----</option>
                       <?php
                       $datenow = strtotime(date("Y-m-d"));

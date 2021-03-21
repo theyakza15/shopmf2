@@ -84,7 +84,7 @@ $(document).ready(function () {
             $("#date_top_pro1").attr("readonly", true);
             $("#date_top_pro2").attr("readonly", true);
             $("#month_top_pro").attr("readonly", false);
-            $("#month_year_top_pro").attr("readonly", true);
+            $("#month_year_top_pro").attr("readonly", false);
             $('#top_product').val("0")
             $('#top_si').val("0")
             $('#top_co').val("0")
@@ -449,120 +449,50 @@ $("#in_pro").on("change", function () {
 });
 $("#paym").on("change", function () {
     var id = $(this).val();
-     /* if (id == 1) {//ประเภท
-        $("#sale_sto").attr("readonly", false);
-         $("#si_pay").attr("readonly", true);
-        $("#co_pay").attr("readonly", true); 
-        $("#date_pay_pro1").attr("readonly", true);
-        $("#date_pay_pro2").attr("readonly", true);
-        $("#month_pay_pro").attr("readonly", true);
-        $("#month_year_pay_pro").attr("readonly", true);
-        //$("#status_pay").attr("readonly", false);
-        $('#sale_sto').val(0)
-        $('#si_pay').val(0)
-        $('#co_pay').val(0)
-        $('#date_pay_pro1').val(0)
-        $('#date_pay_pro2').val(0)
-        $('#month_pay_pro').val(0)
-        $('#month_year_pay_pro').val(0) 
-        //$('#status_pay').val(0) */
-    /* }  else if (id == 2) {//สี
-        $("#sale_sto").attr("readonly", true);
-        $("#si_pay").attr("readonly", false);
-        $("#co_pay").attr("readonly", true);
-        $("#date_pay_pro1").attr("readonly", true);
-        $("#date_pay_pro2").attr("readonly", true);
-        $("#month_pay_pro").attr("readonly", true);
-        $("#month_year_pay_pro").attr("readonly", true);
-        //$("#status_pay").attr("readonly", false);
-        $('#sale_sto').val(0)
-        $('#si_pay').val(0)
-        $('#co_pay').val(0)
-        $('#date_pay_pro1').val(0)
-        $('#date_pay_pro2').val(0)
-        $('#month_pay_pro').val(0)
-        $('#month_year_pay_pro').val(0)
-       // $('#status_pay').val(0)
-    }else if (id == 3) {//สี
-        $("#sale_sto").attr("readonly", true);
-        $("#si_pay").attr("readonly", true);
-        $("#co_pay").attr("readonly", false);
-        $("#date_pay_pro1").attr("readonly", true);
-        $("#date_pay_pro2").attr("readonly", true);
-        $("#month_pay_pro").attr("readonly", true);
-        $("#month_year_pay_pro").attr("readonly", true);
-//$("#status_pay").attr("readonly", false);
-        $('#sale_sto').val(0)
-        $('#si_pay').val(0)
-        $('#co_pay').val(0)
-        $('#date_pay_pro1').val(0)
-        $('#date_pay_pro2').val(0)
-        $('#month_pay_pro').val(0)
-        $('#month_year_pay_pro').val(0)
-        $('#status_pay').val(0) */
+     
      if (id==4){//เดือน
-        /* $("#sale_sto").attr("readonly", true);
-        $("#si_pay").attr("readonly", true);
-        $("#co_pay").attr("readonly", true); */
         $("#date_pay_pro1").attr("readonly", true);
         $("#date_pay_pro2").attr("readonly", true);
         $("#month_pay_pro").attr("readonly", false);
-        $("#month_year_pay_pro").attr("readonly", true);
-        $("#status_sto").attr("readonly", false);
-        /* $('#sale_sto').val(0)
-        $('#si_pay').val(0)
-        $('#co_pay').val(0) */
+        $("#month_year_pay_pro").attr("readonly", false);
+        $("#status_pay").attr("readonly", false);  
         $('#date_pay_pro1').val(0)
         $('#date_pay_pro2').val(0)
         $('#month_pay_pro').val(0)
         $('#month_year_pay_pro').val(0)
         $('#status_pay').val(2)
     }else if (id==5){//ปี
-        /* $("#sale_sto").attr("readonly", true);
-        $("#si_pay").attr("readonly", true);
-        $("#co_pay").attr("readonly", true); */
+        
         $("#date_pay_pro1").attr("readonly", true);
         $("#date_pay_pro2").attr("readonly", true);
         $("#month_pay_pro").attr("readonly", true);
         $("#month_year_pay_pro").attr("readonly", false);
         $("#status_pay").attr("readonly", false);
-        /* $('#sale_sto').val(0)
-        $('#si_pay').val(0)
-        $('#co_pay').val(0) */
         $('#date_pay_pro1').val(0)
         $('#date_pay_pro2').val(0)
         $('#month_pay_pro').val(0)
         $('#month_year_pay_pro').val(0)
         $('#status_pay').val(2)
-    }else if (id==6){//กำหนดเอง
-        /* $("#sale_sto").attr("readonly", true);
-        $("#si_pay").attr("readonly", true);
-        $("#co_pay").attr("readonly", true); */
+    }else if (id==6){//day
+        
         $("#date_pay_pro1").attr("readonly", false);
         $("#date_pay_pro2").attr("readonly", false);
         $("#month_pay_pro").attr("readonly", true);
         $("#month_year_pay_pro").attr("readonly", true);
         $("#status_pay").attr("readonly", false);
-        /* $('#sale_sto').val(0)
-        $('#si_pay').val(0)
-        $('#co_pay').val(0) */
         $('#date_pay_pro1').val(0)
         $('#date_pay_pro2').val(0)
         $('#month_pay_pro').val(0)
         $('#month_year_pay_pro').val(0)
         $('#status_pay').val(2)
     }else if (id==7){//สถานะ
-        /* $("#sale_sto").attr("readonly", true);
-        $("#si_pay").attr("readonly", true);
-        $("#co_pay").attr("readonly", true); */
+      
         $("#date_pay_pro1").attr("readonly", true);
         $("#date_pay_pro2").attr("readonly", true);
         $("#month_pay_pro").attr("readonly", true);
         $("#month_year_pay_pro").attr("readonly", true);
         $("#status_pay").attr("readonly", false);
-        /* $('#sale_sto').val(0)
-        $('#si_pay').val(0)
-        $('#co_pay').val(0) */
+       
         $('#date_pay_pro1').val(0)
         $('#date_pay_pro2').val(0)
         $('#month_pay_pro').val(0)

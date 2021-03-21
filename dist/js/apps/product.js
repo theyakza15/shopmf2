@@ -65,9 +65,9 @@ $('.insert_product').on('submit', function (event) {
                         icon: "success",
                         button: false,
                     });
-                    /* setTimeout(function () {
+                     setTimeout(function () {
                         location.reload();
-                    }, 2000); */  
+                    }, 2000);   
                 }
             });
     

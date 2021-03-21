@@ -45,7 +45,7 @@
                                     <select id="type_emp" class="form-control" name="type_emp" readonly>
                                         <option selected value="0">----โปรดเลือก----</option>
                                         <option value="1">ผู้ดูแลระบบ</option>
-                                        <option value="2">พนักงาน</option>
+                                        <option value="2">ผู้ใช้งานระบบ</option>
 
                                     </select>
                                     <span class="error_select"></span>

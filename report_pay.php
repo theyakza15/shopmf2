@@ -95,8 +95,8 @@ function DateThai($strDate)
   WHERE DATE(pay_date) BETWEEN '$date_pay_pro1' AND '$date_pay_pro2' AND status_pay_det ='$status_pay'
   ORDER BY pay_id ASC";
   $title = 'รายงานยอดขายวันที่ '.DateThai1($date_pay_pro1)." ถึง ".DateThai1($date_pay_pro2);;
-  
-}else if ($month_pay_pro!='0'&&$status_pay!='2') {
+  echo 1;
+}else if ($month_pay_pro!='0'&&$status_pay!='2'&&$month_year_pay_pro!='0') {
   $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
   ,tb_product.pd_name AS pd_name
@@ -110,10 +110,32 @@ function DateThai($strDate)
   INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det = tb_color_detail.pd_id
   INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
   INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
-  WHERE MONTH(pay_date) ='$month_pay_pro'  AND status_pay_det ='$status_pay'
+  WHERE MONTH(pay_date) ='$month_pay_pro'  AND status_pay_det ='$status_pay' AND YEAR(pay_date) ='$month_year_pay_pro'
   ORDER BY pay_id ASC";
-  $title = 'รายงานยอดขายเดือน '. month($month_pay_pro);
-  
+  $convert_date = $month_year_pay_pro."-01-01";
+  $strYear = date("Y", strtotime($convert_date)) + 543;
+  $title = 'รายงานยอดขายเดือน '. month($month_pay_pro)." "."ปี".$month_year_pay_pro;
+  echo 2;
+}else if ($month_pay_pro!='0'&&$month_year_pay_pro!='0') {
+  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
+  ,paymant.pay_date AS pay_date
+  ,tb_product.pd_name AS pd_name
+  ,paymant.type_pay AS type_pay
+  ,tb_color.co_name AS co_name
+  ,tb_size.si_name AS si_name
+  FROM paymant_detail
+  INNER JOIN paymant ON paymant.pay_id = paymant_detail.pay_id
+  INNER JOIN tb_color_detail  ON tb_color_detail.id_color_det = paymant_detail.pay_pd_id
+  INNER JOIN tb_color ON tb_color.co_id = tb_color_detail.id_color
+  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det = tb_color_detail.pd_id
+  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
+  INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
+  WHERE MONTH(pay_date) ='$month_pay_pro'   AND YEAR(pay_date) ='$month_year_pay_pro'
+  ORDER BY pay_id ASC";
+  $convert_date = $month_year_pay_pro."-01-01";
+  $strYear = date("Y", strtotime($convert_date)) + 543;
+  $title = 'รายงานยอดขายเดือน '. month($month_pay_pro)." "."ปี".$month_year_pay_pro;
+  echo 2.2;
 }else if ($month_year_pay_pro!='0'&&$status_pay!='2') {
   $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
@@ -135,17 +157,38 @@ function DateThai($strDate)
   $strYear = date("Y", strtotime($convert_date)) + 543;
   $title = 'รายงานยอดขายปีที่ '.$strYear;
   // แปลงปี ใช้ตรงนี้
-  
+  echo 3;
 }
-else if ($status_pay=='1') {
+else if ($month_year_pay_pro!='0'&&$status_pay=='2') {
   $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
   ,tb_product.pd_name AS pd_name
   ,paymant.type_pay AS type_pay
   ,tb_color.co_name AS co_name
   ,tb_size.si_name AS si_name
-
-
+  FROM paymant_detail
+  INNER JOIN paymant ON paymant.pay_id = paymant_detail.pay_id
+  INNER JOIN tb_color_detail  ON tb_color_detail.id_color_det = paymant_detail.pay_pd_id
+  INNER JOIN tb_color ON tb_color.co_id = tb_color_detail.id_color
+  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det = tb_color_detail.pd_id
+  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
+  INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
+  WHERE YEAR(pay_date) ='$month_year_pay_pro'  
+  ORDER BY pay_id ASC";
+//แปลงปี ใช้ตรงนี้
+ $convert_date = $month_year_pay_pro."-01-01";
+  $strYear = date("Y", strtotime($convert_date)) + 543;
+  $title = 'รายงานยอดขายปีที่ '.$strYear;
+  // แปลงปี ใช้ตรงนี้
+  echo 4;
+}else if ($status_pay=='1') {
+  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
+  ,paymant.pay_date AS pay_date
+  ,tb_product.pd_name AS pd_name
+  ,paymant.type_pay AS type_pay
+  ,tb_color.co_name AS co_name
+  ,tb_size.si_name AS si_name
+  
   FROM paymant_detail
   INNER JOIN paymant ON paymant.pay_id = paymant_detail.pay_id
   INNER JOIN tb_color_detail  ON tb_color_detail.id_color_det = paymant_detail.pay_pd_id
@@ -157,7 +200,7 @@ else if ($status_pay=='1') {
   WHERE  status_pay_det ='$status_pay'
   ORDER BY pay_id ASC";
   $title = 'รายงานสถานะยอดขาย (ปกติ) ';
-
+  echo 5;
 }else if ($status_pay!='2') {
   $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
   ,paymant.pay_date AS pay_date
@@ -180,6 +223,25 @@ else if ($status_pay=='1') {
   ORDER BY pay_id ASC";
   $title = 'รายงานสถานะยอดขาย (ยกเลิก)';
   $check =1;
+  echo 6;
+}else if ($month_pay_pro!='0') {
+  $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
+  ,paymant.pay_date AS pay_date
+  ,tb_product.pd_name AS pd_name
+  ,paymant.type_pay AS type_pay
+  ,tb_color.co_name AS co_name
+  ,tb_size.si_name AS si_name
+  FROM paymant_detail
+  INNER JOIN paymant ON paymant.pay_id = paymant_detail.pay_id
+  INNER JOIN tb_color_detail  ON tb_color_detail.id_color_det = paymant_detail.pay_pd_id
+  INNER JOIN tb_color ON tb_color.co_id = tb_color_detail.id_color
+  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det = tb_color_detail.pd_id
+  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
+  INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
+  WHERE MONTH(pay_date) ='$month_pay_pro'   
+  ORDER BY pay_id ASC";
+  $title = 'รายงานยอดขายเดือน '. month($month_pay_pro);
+  echo 7;
 }
 else{
   $sql_pay = "SELECT paymant.pay_id AS pay_id ,pay_pd_id,total_dis_co,pay_total,amount_pay,status_pay_det
@@ -197,6 +259,7 @@ else{
   INNER JOIN tb_product ON tb_product.pd_id =tb_produnt_detail.pd_id
   ORDER BY pay_id ASC";
   $title = "รายงานยอดขายทั้งหมด";
+  echo 99;
 }
 $sumpayto  =0;
 ?>
@@ -208,9 +271,16 @@ $sumpayto  =0;
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    table {font-family: Helvetica, Arial, Verdana; font-size: 14pt
+    }
+    @media print {
+        thead {display: table-header-group;}
+    }
+</style>
 </head>
 
-<div style="margin:auto;  height : 40px; width :200px"></div>
+
 <table style="margin:auto">
   <thead>
     <tr>
@@ -234,7 +304,6 @@ $sumpayto  =0;
             <p>
               <width="150px" class="text-right">ผู้ออก :<?= $name . " " . $surname ?>
             </p>
-
           </div>
         </div>
       </th>
@@ -253,40 +322,37 @@ $sumpayto  =0;
             <thead>
 
             <tr>
-          <th width="1%">
+          <th >
             <center>ลำดับ</center>
           </th>
-          <th width="20%">
+          <th >
             <center>รายการ</center>
           </th>
-         
-          
-          <th width="5%">
+          <th >
             <center>ไซส์</center>
           </th>
-          <th width="5%">
+          <th >
             <center>สี</center>
           </th>
-          <th width="5%">
+          <th >
             <center>จำนวนที่ขาย</center>
           </th>
-          
-
-          <th width="10%">
+          <th >
             <center>ส่วนลด</center>
           </th>
   
-          <th width="10%">
+          <th >
             <center>ราคาสุทธิ</center>
           </th>
-          <th width="30%">
+          <th >
             <center>ยกเลิกโดย</center>
           </th>
-          <th width="20%">
+          <th >
             <center>วันที่ยกเลิก</center>
           </th>
         </tr>
-
+        </thead>
+<tbody>
         <?php
         
 
@@ -359,6 +425,8 @@ $sumpayto  =0;
 
 
 ?>
+</tbody>
+
       <?php
     }else{
      ?>
@@ -372,40 +440,41 @@ $sumpayto  =0;
             <thead>
 
             <tr>
-          <th width="1%">
+          <th >
             <center>ลำดับ</center>
           </th>
-          <th width="20%">
+          <th >
             <center>รายการ</center>
           </th>
-          <th width="15%">
+          <th >
             <center>วันที่ขาย</center>
           </th>
           
-          <th width="5%">
+          <th >
             <center>ไซส์</center>
           </th>
-          <th width="5%">
+          <th >
             <center>สี</center>
           </th>
-          <th width="5%">
+          <th >
             <center>จำนวนที่ขาย</center>
           </th>
           
 
-          <th width="10%">
+          <th >
             <center>ส่วนลด</center>
           </th>
   
-          <th width="10%">
+          <th >
             <center>ราคาสุทธิ</center>
           </th>
-<th width="10%">
+<th >
             <center>สถานะ</center>
           </th>
 
         </tr>
-
+        </thead>
+<tbody>
         <?php
         
 
@@ -479,7 +548,7 @@ $sumpayto  =0;
     }
     ?>
     
-
+    </tbody>
 <?php 
 if($sumpayto >0){
   ?>
@@ -502,12 +571,3 @@ if($sumpayto >0){
 
 
 
-  </thead>
-</table>
-
-</td>
-</tr>
-<tbody>
-
-
-  </table

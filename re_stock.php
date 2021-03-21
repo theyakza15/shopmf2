@@ -83,7 +83,7 @@ function DateThai($strDate)
     }
     return "$strDay/$strMonth/$strYear $strHour:$strMinute";
 }
-/* if($sisto!='0'&& $st_sto!='2'){
+if ($dapro1!=''&&$dapro2!=''&&$st_sto!='2'){ //วันที่
   $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
   ,tb_stock.st_dete AS st_dete
   ,tb_color.co_name AS co_name
@@ -96,113 +96,12 @@ function DateThai($strDate)
   INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
   INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
   INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
-  WHERE tb_size.si_id = '$sisto' AND tb_stock_detail.status ='$st_sto'
-  ORDER BY id_st ASC";
-   $title = 'รายงานการรับสินค้า (ไซส์) ';
-  
-}else if ($sisto!='0'){
-  $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
-  ,tb_stock.st_dete AS st_dete
-  ,tb_color.co_name AS co_name
-  ,tb_size.si_name AS si_name
-  ,tb_product.pd_name AS pd_name
-  FROM tb_stock_detail
-  INNER JOIN tb_stock ON tb_stock.st_id =  tb_stock_detail.id_st
-  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det = tb_stock_detail.pd_id
-  INNER JOIN tb_color ON tb_color.co_id =tb_color_detail.id_color
-  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
-  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
-  INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
-  WHERE tb_size.si_id = '$sisto' 
-  ORDER BY id_st ASC";
-  $title = 'รายงานการรับสินค้า (ไซส์) ';
-  
-}else if ($co_sto!='0'&& $st_sto!='2'){
-  $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
-  ,tb_stock.st_dete AS st_dete
-  ,tb_color.co_name AS co_name
-  ,tb_size.si_name AS si_name
-  ,tb_product.pd_name AS pd_name
-  FROM tb_stock_detail
-  INNER JOIN tb_stock ON tb_stock.st_id =  tb_stock_detail.id_st
-  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det = tb_stock_detail.pd_id
-  INNER JOIN tb_color ON tb_color.co_id =tb_color_detail.id_color
-  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
-  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
-  INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
-  WHERE tb_color.co_id = '$co_sto' AND tb_stock_detail.status ='$st_sto'
-  ORDER BY id_st ASC";
-  $title = 'รายงานการรับสินค้า (สี) ';
-  
-}else if ($co_sto!='0'){
-  $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
-  ,tb_stock.st_dete AS st_dete
-  ,tb_color.co_name AS co_name
-  ,tb_size.si_name AS si_name
-  ,tb_product.pd_name AS pd_name
-  FROM tb_stock_detail
-  INNER JOIN tb_stock ON tb_stock.st_id =  tb_stock_detail.id_st
-  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det = tb_stock_detail.pd_id
-  INNER JOIN tb_color ON tb_color.co_id =tb_color_detail.id_color
-  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
-  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
-  INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
-  WHERE tb_color.co_id = '$co_sto' 
-  ORDER BY id_st ASC";
-  $title = 'รายงานการรับสินค้า (สี) '; */
-  
- if ($mip!=0){ //เดือน
-  $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
-  ,tb_stock.st_dete AS st_dete
-  ,tb_color.co_name AS co_name
-  ,tb_size.si_name AS si_name
-  ,tb_product.pd_name AS pd_name
-  FROM tb_stock_detail
-  INNER JOIN tb_stock ON tb_stock.st_id =  tb_stock_detail.id_st
-  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det = tb_stock_detail.pd_id
-  INNER JOIN tb_color ON tb_color.co_id =tb_color_detail.id_color
-  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
-  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
-  INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
-  WHERE MONTH(st_dete) = '$mip' AND YEAR(st_dete) = '$yip'
-  ORDER BY id_st ASC";
-  $title = 'รายงานการรับสินค้าเดือน '. month($mip)." "."ปี"." ".yearThai1($yip);
-
-}else if ($yip!=0){ ///ปี
-  $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
-  ,tb_stock.st_dete AS st_dete
-  ,tb_color.co_name AS co_name
-  ,tb_size.si_name AS si_name
-  ,tb_product.pd_name AS pd_name
-  FROM tb_stock_detail
-  INNER JOIN tb_stock ON tb_stock.st_id =  tb_stock_detail.id_st
-  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det = tb_stock_detail.pd_id
-  INNER JOIN tb_color ON tb_color.co_id =tb_color_detail.id_color
-  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
-  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
-  INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
-  WHERE YEAR(st_dete) = '$yip'
-  ORDER BY id_st ASC";
-  $title = 'รายงานการรับสินค้าปี '. yearThai1($yip);
-
-}else if ($dapro1!=''&&$dapro2!=''){ //วันที่
-  $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
-  ,tb_stock.st_dete AS st_dete
-  ,tb_color.co_name AS co_name
-  ,tb_size.si_name AS si_name
-  ,tb_product.pd_name AS pd_name
-  FROM tb_stock_detail
-  INNER JOIN tb_stock ON tb_stock.st_id =  tb_stock_detail.id_st
-  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det = tb_stock_detail.pd_id
-  INNER JOIN tb_color ON tb_color.co_id =tb_color_detail.id_color
-  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
-  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
-  INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
-  WHERE DATE(st_dete) BETWEEN '$dapro1' AND '$dapro2'
+  WHERE DATE(st_dete) BETWEEN '$dapro1' AND '$dapro2' AND tb_stock_detail.status ='$st_sto'
   ORDER BY id_st ASC";
  $title = 'รายงานการรับสินค้าวันที่ '.DateThai1($dapro1)." ถึง ".DateThai1($dapro2);
+ echo 1 ;
   
-}else if ( $st_sto!='2'){
+}else if($mip!=0 && $yip!=0 &&$st_sto!='2'){ //เดือน//ปี
   $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
   ,tb_stock.st_dete AS st_dete
   ,tb_color.co_name AS co_name
@@ -215,12 +114,121 @@ function DateThai($strDate)
   INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
   INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
   INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
-  WHERE tb_stock_detail.status ='$st_sto'
+  WHERE MONTH(st_dete) = '$mip' AND YEAR(st_dete) = '$yip' AND tb_stock_detail.status ='$st_sto'
   ORDER BY id_st ASC";
-  $title = 'รายงานการรับสินค้า (สถานะ) ';
-
-}
-else{
+   $convert_date = $yip."-01-01";
+   $strYear = date("Y", strtotime($convert_date)) + 543;
+  $title = 'รายงานการรับสินค้าเดือน '. month($mip)." "."ปี"." ".$strYear;
+  echo 2 ;
+}else if($dapro1!=''&&$dapro2!=''){ //วันที่
+  $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
+  ,tb_stock.st_dete AS st_dete
+  ,tb_color.co_name AS co_name
+  ,tb_size.si_name AS si_name
+  ,tb_product.pd_name AS pd_name
+  FROM tb_stock_detail
+  INNER JOIN tb_stock ON tb_stock.st_id =  tb_stock_detail.id_st
+  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det = tb_stock_detail.pd_id
+  INNER JOIN tb_color ON tb_color.co_id =tb_color_detail.id_color
+  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
+  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
+  INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
+  WHERE DATE(st_dete) BETWEEN '$dapro1' AND '$dapro2' 
+  ORDER BY id_st ASC";
+ $title = 'รายงานการรับสินค้าวันที่ '.DateThai1($dapro1)." ถึง ".DateThai1($dapro2);
+ echo 3 ; 
+}else if($mip!=0 && $yip!=0 ){ //เดือน//ปี
+  $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
+  ,tb_stock.st_dete AS st_dete
+  ,tb_color.co_name AS co_name
+  ,tb_size.si_name AS si_name
+  ,tb_product.pd_name AS pd_name
+  FROM tb_stock_detail
+  INNER JOIN tb_stock ON tb_stock.st_id =  tb_stock_detail.id_st
+  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det = tb_stock_detail.pd_id
+  INNER JOIN tb_color ON tb_color.co_id =tb_color_detail.id_color
+  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
+  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
+  INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
+  WHERE MONTH(st_dete) = '$mip' AND YEAR(st_dete) = '$yip' 
+  ORDER BY id_st ASC";
+  $convert_date = $yip."-01-01";
+  $strYear = date("Y", strtotime($convert_date)) + 543;
+ $title = 'รายงานการรับสินค้าเดือน '. month($mip)." "."ปี"." ".$strYear;
+  echo 4 ;
+}else if($yip!=0 &&$st_sto!='2'){ //ปี
+  $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
+  ,tb_stock.st_dete AS st_dete
+  ,tb_color.co_name AS co_name
+  ,tb_size.si_name AS si_name
+  ,tb_product.pd_name AS pd_name
+  FROM tb_stock_detail
+  INNER JOIN tb_stock ON tb_stock.st_id =  tb_stock_detail.id_st
+  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det = tb_stock_detail.pd_id
+  INNER JOIN tb_color ON tb_color.co_id =tb_color_detail.id_color
+  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
+  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
+  INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
+  WHERE  YEAR(st_dete) = '$yip' AND tb_stock_detail.status ='$st_sto'
+  ORDER BY id_st ASC";
+  $convert_date = $yip."-01-01";
+  $strYear = date("Y", strtotime($convert_date)) + 543;
+  $title = 'รายงานการรับสินค้าปี'.$strYear ;
+  echo 5 ;
+}else if($yip!=0 ){ //ปี
+  $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
+  ,tb_stock.st_dete AS st_dete
+  ,tb_color.co_name AS co_name
+  ,tb_size.si_name AS si_name
+  ,tb_product.pd_name AS pd_name
+  FROM tb_stock_detail
+  INNER JOIN tb_stock ON tb_stock.st_id =  tb_stock_detail.id_st
+  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det = tb_stock_detail.pd_id
+  INNER JOIN tb_color ON tb_color.co_id =tb_color_detail.id_color
+  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
+  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
+  INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
+  WHERE  YEAR(st_dete) = '$yip' 
+  ORDER BY id_st ASC";
+  $convert_date = $yip."-01-01";
+  $strYear = date("Y", strtotime($convert_date)) + 543;
+  $title = 'รายงานการรับสินค้าปี'.$strYear ;
+  echo 6 ;
+}else if($st_sto!='2'){ //สถานะ
+  $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
+  ,tb_stock.st_dete AS st_dete
+  ,tb_color.co_name AS co_name
+  ,tb_size.si_name AS si_name
+  ,tb_product.pd_name AS pd_name
+  FROM tb_stock_detail
+  INNER JOIN tb_stock ON tb_stock.st_id =  tb_stock_detail.id_st
+  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det = tb_stock_detail.pd_id
+  INNER JOIN tb_color ON tb_color.co_id =tb_color_detail.id_color
+  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
+  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
+  INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
+  WHERE   tb_stock_detail.status ='$st_sto'
+  ORDER BY id_st ASC";
+  $title = 'รายงานการรับสินค้าเดือน '. month($mip)." "."ปี"." ".yearThai1($yip);
+  echo 7 ;
+}else if($mip!=0 ){ //เดือน
+  $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
+  ,tb_stock.st_dete AS st_dete
+  ,tb_color.co_name AS co_name
+  ,tb_size.si_name AS si_name
+  ,tb_product.pd_name AS pd_name
+  FROM tb_stock_detail
+  INNER JOIN tb_stock ON tb_stock.st_id =  tb_stock_detail.id_st
+  INNER JOIN tb_color_detail ON tb_color_detail.id_color_det = tb_stock_detail.pd_id
+  INNER JOIN tb_color ON tb_color.co_id =tb_color_detail.id_color
+  INNER JOIN tb_produnt_detail ON tb_produnt_detail.id_pd_det =tb_color_detail.pd_id
+  INNER JOIN tb_size ON tb_size.si_id = tb_produnt_detail.det_size
+  INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
+  WHERE MONTH(st_dete) = '$mip' 
+  ORDER BY id_st ASC";
+  $title = 'รายงานการรับสินค้าเดือน '. month($mip);
+  echo 8 ;
+}else{
   $sql_sto_re = "SELECT id_st,tb_stock_detail.amount AS amount,tb_stock_detail.pd_id AS pd_id,tb_stock_detail.status AS status
   ,tb_stock.st_dete AS st_dete
   ,tb_color.co_name AS co_name
@@ -235,6 +243,7 @@ else{
   INNER JOIN tb_product ON tb_product.pd_id = tb_produnt_detail.pd_id
   ORDER BY id_st ASC";
    $title = 'รายงานการรับสินค้าทั้งหมด ';
+   echo 99 ;
 }
 
 ?>
@@ -246,9 +255,16 @@ else{
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    table {font-family: Helvetica, Arial, Verdana; font-size: 14pt
+    }
+    @media print {
+        thead {display: table-header-group;}
+    }
+</style>
 </head>
 
-<div style="margin:auto;  height : 40px; width :200px"></div>
+
 <table style="margin:auto">
   <thead>
     <tr>
@@ -287,32 +303,33 @@ else{
           <table class="table" border="1" width="100%">
             <thead>
             <tr>
-          <th width="1%">
+          <th >
             <center>ลำดับ</center>
           </th>
-          <th width="10%">
+          <th >
             <center>รหัสรับสินค้า</center>
           </th>
-          <th width="20%">
+          <th >
             <center>ชื่อสินค้า</center>
           </th>
-          <th width="5%">
+          <th >
             <center>ไซส์</center>
           </th>
-          <th width="5%">
+          <th >
             <center>สี</center>
           </th>
-          <th width="5%">
+          <th >
             <center>จำนวน</center>
           </th>
-          <th width="15%">
+          <th >
             <center>วันที่รับ</center>
           </th>
-          <th width="10%">
+          <th >
             <center>สถานะ</center>
           </th>
         </tr>
-
+        </thead>
+<tbody>
               <?php
 
 
@@ -374,12 +391,4 @@ if ($result->num_rows > 0) {
 
 
 ?>
-  </thead>
-</table>
-
-</td>
-</tr>
-<tbody>
-
-
-  </table>
+ </tbody>

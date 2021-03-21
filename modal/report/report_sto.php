@@ -183,7 +183,7 @@
                                 <div class="form-group">
                                     <select id="status_sto" class="form-control" name="status_sto" readonly>
                                         <option selected value="2">----โปรดเลือก----</option>
-                                        <option value="1">กำลังใช้งาน</option>
+                                        <option value="1">ปกติ</option>
                                         <option value="0">ยกเลิก</option>
 
                                     </select>

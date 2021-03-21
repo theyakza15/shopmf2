@@ -23,8 +23,8 @@
                                         <option value="5">ทั้งหมด</option>
                                         <option value="1">กำหนดเอง</option>
                                         <!-- <option value="2">กลุ่มสินค้า</option> -->
-                                        <option value="3">ไซส์</option>
-                                        <option value="4">สี</option>
+                                        <!-- <option value="3">ไซส์</option>
+                                        <option value="4">สี</option> -->
                                         
                                         
                                         

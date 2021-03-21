@@ -93,24 +93,6 @@ if ($type != '0' && $status_e != '2') {
   WHERE type_per = '$type' AND tb_employees.status_emp  = '$status_e'
   ORDER BY emp_id ASC";
   $title = "รายงานพนักงาน";
-} else if ($type != '0') {
-  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
-  ,tb_permissions.type_per AS type_per
-  ,tb_permissions.status AS status
-  FROM tb_employees
-  LEFT JOIN tb_permissions ON tb_permissions.emp_id =tb_employees.emp_id
-  WHERE type_per = '$type'
-  ORDER BY emp_id ASC";
-  $title = "รายงานพนักงาน (สิทธิ์การใช้งาน)";
-} else if ($status_e != '2') {
-  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
-  ,tb_permissions.type_per AS type_per
-  ,tb_permissions.status AS status
-  FROM tb_employees
-  LEFT JOIN tb_permissions ON tb_permissions.emp_id =tb_employees.emp_id
-  WHERE  tb_employees.status_emp = '$status_e'
-  ORDER BY emp_id ASC";
-  $title = "รายงานพนักงาน (สถานะการทำงาน)";
 } else if ($date_emp1 != '' && $date_emp2 != '') {
   $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
   ,tb_permissions.type_per AS type_per
@@ -128,7 +110,27 @@ if ($type != '0' && $status_e != '2') {
   LEFT JOIN tb_permissions ON tb_permissions.emp_id =tb_employees.emp_id
   WHERE   MONTH(emp_bd) ='$month_emp' AND YEAR(emp_bd) ='$year_emp'
   ORDER BY emp_id ASC";
+  $convert_date = $year_emp."-01-01";
+  $strYear = date("Y", strtotime($convert_date)) + 543;
   $title = 'รายงานพนักงานที่เข้าทำงานเดือน ' . month($month_emp) . " " . "ปี" . " " . yearThai1($year_emp);
+} else if ($type != '0') {
+  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
+  ,tb_permissions.type_per AS type_per
+  ,tb_permissions.status AS status
+  FROM tb_employees
+  LEFT JOIN tb_permissions ON tb_permissions.emp_id =tb_employees.emp_id
+  WHERE type_per = '$type' AND tb_employees.status_emp = '1'
+  ORDER BY emp_id ASC";
+  $title = "รายงานพนักงาน (สิทธิ์การใช้งาน)";
+} else if ($status_e != '2') {
+  $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
+  ,tb_permissions.type_per AS type_per
+  ,tb_permissions.status AS status
+  FROM tb_employees
+  LEFT JOIN tb_permissions ON tb_permissions.emp_id =tb_employees.emp_id
+  WHERE  tb_employees.status_emp = '$status_e'
+  ORDER BY emp_id ASC";
+  $title = "รายงานพนักงาน (สถานะการทำงาน)";
 } else if ($year_emp != '0') {
   $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
   ,tb_permissions.type_per AS type_per
@@ -137,7 +139,9 @@ if ($type != '0' && $status_e != '2') {
   LEFT JOIN tb_permissions ON tb_permissions.emp_id =tb_employees.emp_id
   WHERE   YEAR(emp_bd) ='$year_emp'
   ORDER BY emp_id ASC";
-  $title = 'รายงานพนักงานที่เข้าทำงานปี' . " " . yearThai1($year_emp);
+$convert_date = $year_emp."-01-01";
+$strYear = date("Y", strtotime($convert_date)) + 543;
+$title = 'รายงานพนักงานที่เข้าทำงานปี' . " " .$strYear;
 } else {
   $sql_emp_re = "SELECT tb_employees.emp_id AS emp_id,emp_name,emp_surname,tb_employees.status_emp AS status_emp,emp_bd
   ,tb_permissions.type_per AS type_per
@@ -158,9 +162,16 @@ if ($type != '0' && $status_e != '2') {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    table {font-family: Helvetica, Arial, Verdana; font-size: 14pt
+    }
+    @media print {
+        thead {display: table-header-group;}
+    }
+</style>
 </head>
 
-<div style="margin:auto;  height : 40px; width :200px"></div>
+
 <table style="margin:auto">
   <thead>
     <tr>
@@ -199,28 +210,27 @@ if ($type != '0' && $status_e != '2') {
           <table class="table" border="1" width="100%">
             <thead>
               <tr>
-                <th width="1%">
+                <th>
                   <center>ลำดับ</center>
                 </th>
-                <th width="10%">
+                <th>
                   <center>รหัสพนักงาน</center>
                 </th>
-                <th width="15%">
+                <th>
                   <center>ชื่อ-นามสกุล</center>
                 </th>
-                <th width="5%">
+                <th>
                   <center>สถานะ</center>
                 </th>
-                <th width="10%">
+                <th>
                   <center>ระดับสิทธิ์ผู้ใช้งาน</center>
                 </th>
-                <th width="10%">
+                <th>
                   <center>วันที่เข้าทำงาน</center>
                 </th>
-
-
               </tr>
-
+              </thead>
+<tbody>
               <?php
 
               $result = mysqli_query($conn, $sql_emp_re);
@@ -277,19 +287,11 @@ if ($type != '0' && $status_e != '2') {
 
 
 
-    </tbody>
+                  </tbody>
 <?php
                 }
               }
 
 
 ?>
-  </thead>
-</table>
-
-</td>
-</tr>
-<tbody>
-
-
-  </table>
+</tbody>
